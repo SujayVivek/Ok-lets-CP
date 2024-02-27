@@ -20,24 +20,25 @@ int main(){
     long long a, b, l;
     cin >> a >> b >> l;
 
-    set<long long> possible_k_values;
+    set <long long> st;
+    long long x= floor(log(l)/log(a));
+    long long y= floor(log(l)/log(b));
 
-    
-    for (long long x = 0; pow(a, x) <= l; x++) {
-        for (long long y = 0; pow(b, y) <= l; y++) {
-            long long k = l / (pow(a, x) * pow(b, y));
-            if(k==1)possible_k_values.insert(1);
-            if (k * pow(a, x) * pow(b, y) == l) {
-                
-                possible_k_values.insert(k);
+    for(int i=0;i<=x+1;i++){
+        for(int j=0;j<=y+1;j++){
+            long long  p= pow(a, i) * pow(b, j);
+            int k= l/p;
+            
+            if(k*p==l){
+                st.insert(k);
+                // cout<<k<<endl;
             }
+            
         }
     }
-
+    cout<<st.size()<<endl;
     
-    cout << possible_k_values.size() << endl;
+
     }
-
-
     return 0;
 }
