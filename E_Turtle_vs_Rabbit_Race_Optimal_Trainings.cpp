@@ -12,41 +12,39 @@ using namespace std;
 typedef vector<int> vi;
 #define PB push_back
 
+
 int main(){
     int t;cin>>t;
     while(t--){
         int n;
-        cin>>n;
-        vi v(n,0);
-        vi hash(n,0);
+        cin>>n;vi v(n,0);
+        vi cumulative(n,0);
         FOR(i,n){
             cin>>v[i];
-            
-        }
-        sort(v.begin(),v.begin()+n);
-        if(v[0]==1 && v[1]==1){
-            cout<<"NO"<<endl;
-        }
-        else if(v[0]==v[1]){int ctr=0;
-            FOR(i,n){
-                if(v[n-i-1]%v[0]==0){
-                    ctr++;
-                    // ctr++;cout<<"hi"<<ctr<<endl;
-                }
-            }
-            if(ctr==n){
-                cout<<"NO"<<endl;
+            if(i!=0){
+                cumulative[i]=v[i]+cumulative[i-1];
             }
             else{
-                cout<<"YES"<<endl;
+                cumulative[0]=v[0];
             }
         }
-        else{
-            cout<<"YES"<<endl;
+        int q;cin>>q;
+        FOR(i,q){
+            int l,u;cin>>l>>u;int mid;
+            int high=n-1;int low=l-1;
+            while(low<=high){
+                mid=(low+high)/2;
+                if(mid>=u){
+                    high=mid-1;
+                }
+                else if(mid<u){
+                    low=mid+1;
+                }
+            }
+            cout<<mid+1<<" "; 
         }
-
+        cout<<endl;
 
     }
     return 0;
-
 }
