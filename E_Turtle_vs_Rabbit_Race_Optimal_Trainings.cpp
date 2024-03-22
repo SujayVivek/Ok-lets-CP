@@ -32,12 +32,12 @@ int main(){
         FOR(i,q){
             int l,u;cin>>l>>u;int mid;
             int high=n-1;int low=l-1;
-            while(low<=high){
+            while(cumulative[low]<=cumulative[high]){
                 mid=(low+high)/2;
-                if(mid>=u){
+                if(cumulative[mid]>=u){
                     high=mid-1;
                 }
-                else if(mid<u){
+                else if(cumulative[mid]<u){
                     low=mid+1;
                 }
             }
