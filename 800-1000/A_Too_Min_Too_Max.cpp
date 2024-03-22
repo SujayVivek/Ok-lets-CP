@@ -15,7 +15,14 @@ typedef vector<int> vi;
 int main(){
     int t;cin>>t;
     while(t--){
-        
+        int n;cin>>n;
+        vi v(n,0);
+        FOR(i,n){
+            cin>>v[i];
+        }
+        sort(v.begin(),v.end());
+        int sum= abs(v[n-1]-v[0])+ abs(v[0]-v[n-2])+ abs(v[n-2]-v[1])+ abs(v[1]-v[n-1]);
+        cout<<sum<<endl;
     }
     return 0;
 }
