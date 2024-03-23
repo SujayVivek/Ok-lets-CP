@@ -14,46 +14,28 @@ typedef vector<long long> vll;
 #define PB push_back
 #define ll long long
 
+int Solve(int n, vi &dp){
+    int sum=0;
+    if(n==0){
+        return 0;
+    }
+    if(dp[n]!=-1){
+        return dp[n];
+    }
+    sum+=n/15+Solve(n%15,dp);
+    sum-=n/15;
+    sum+=n/10+Solve(n%10,dp);
+    sum+=n/6+Solve(n%6,dp);
+    sum+=n/3+Solve(n%3,dp);
+    sum=n/1+Solve(0,dp);
+
+
+}
+
 int main(){
-    int t;cin>>t;vll dp(15,-1);
+    int t;cin>>t;
     while(t--){
-       ll n;cin>>n;ll sum=0;
-        while(n!=0){
-            if(n<15){
-                if(dp[n]!=-1){
-                sum+=dp[n];
-            }
-            else{
-                if(n>=15){
-                sum+=n/15;
-                n=n%15;
-                }
-                else if(n<15 && n>=10){
-                sum+=n/10;
-                n=n%10;
-                }
-                else if(n<10 && n>=6){
-                sum+=n/6;
-                n=n%6;
-                }
-                else if(n<6 && n>=3){
-                sum+=n/3;
-                n=n%3;
-                }
-                else{
-                sum+=n/1;
-                n=n%1;
-                }
-                }
-            }
-            else{
-                sum+=n/15;
-                n=n%15;
-            }
-            
-            dp[n]=sum;
-        }
-        cout<<sum<<endl;
+        Solve();
     }
     return 0;
 }
