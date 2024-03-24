@@ -15,55 +15,21 @@ typedef vector<long long> vll;
 #define ll long long
 
 bool isValid(string s) {
-        unordered_map <char,int> numMap(3);
-        numMap['(']=0;
-        numMap['[']=0;
-        numMap['{']=0;
-
-        for(int i=0;i<s.length();i++){
-            if(s[i]=='('){
-                numMap['(']++;
-                if(numMap['(']<0){
-                    return false;
+        stack<char> st; 
+        for (char c : s) { 
+            if (c == '(' || c == '{' || c == '[') { // if the character is an opening bracket
+                st.push(c); // push it onto the stack
+            } else { // if the character is a closing bracket
+                if (st.empty() || // if the stack is empty or 
+                    (c == ')' && st.top() != '(') || // the closing bracket doesn't match the corresponding opening bracket at the top of the stack
+                    (c == '}' && st.top() != '{') ||
+                    (c == ']' && st.top() != '[')) {
+                    return false; // the string is not valid, so return false
                 }
-            }
-            else if(s[i]=='{'){
-                numMap['{']++;
-                if(numMap['{']<0){
-                    return false;
-                }
-            }
-            else if(s[i]=='['){
-                numMap['[']++;
-                if(numMap['[']<0){
-                    return false;
-                }
-            }
-            if(s[i]==')'){
-                numMap['(']--;
-                if(numMap['(']<0){
-                    return false;
-                }
-            }
-            if(s[i]=='}'){
-                numMap['{']--;
-                if(numMap['{']<0){
-                    return false;
-                }
-            }
-            if(s[i]==']'){
-                numMap['[']--;
-                if(numMap['[']<0){
-                    return false;
-                }
+                st.pop(); // otherwise, pop the opening bracket from the stack
             }
         }
-        if(numMap['(']==0 && numMap['{']==0 && numMap['[']==0){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return st.empty(); 
     }
 
 int main(){
