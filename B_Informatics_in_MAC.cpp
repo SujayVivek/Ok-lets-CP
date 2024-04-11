@@ -14,28 +14,29 @@ typedef vector<long long> vll;
 #define PB push_back
 #define ll long long
 
-int Solve(int n, vi &dp){
-    int sum=0;
-    if(n==0){
-        return 0;
-    }
-    if(dp[n]!=-1){
-        return dp[n];
-    }
-    sum+=n/15+Solve(n%15,dp);
-    sum-=n/15;
-    sum+=n/10+Solve(n%10,dp);
-    sum+=n/6+Solve(n%6,dp);
-    sum+=n/3+Solve(n%3,dp);
-    sum=n/1+Solve(0,dp);
-
-
-}
-
 int main(){
     int t;cin>>t;
     while(t--){
-        Solve();
+        int n;cin>>n;
+        vi v(n,-1);
+        vi hash(n,0);
+        FOR(i,n){
+            cin>>v[i];
+            hash[v[i]]++;
+        }
+        int min_= INT_MAX;
+        FOR(i,n){
+            if(hash[i]==0){
+                min_= min(min_, i);
+            }
+        }
+        if(min_ == INT_MAX){
+            cout<<"-1"<<endl;
+            continue;
+        }
+       
+        
+
     }
     return 0;
 }
