@@ -17,7 +17,17 @@ typedef vector<long long> vll;
 int main(){
     int t;cin>>t;
     while(t--){
-        
+      int n,k;cin>>n>>k;
+      vi v(n,0);int mIn=INT_MAX;
+      FOR(i,n){
+        cin>>v[i];
+        if(v[i]<mIn){
+            
+        }
+        mIn=min(mIn,v[i]);
+      }  
+
+
     }
     return 0;
 }

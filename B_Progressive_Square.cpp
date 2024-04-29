@@ -17,6 +17,38 @@ typedef vector<long long> vll;
 int main(){
     int t;cin>>t;
     while(t--){
+        int n,c,d;
+        cin>>n>>c>>d;
+        // map <int,int> mp;
+        vi hash= {0};vi nums;int MIN= INT_MAX;
+        FOR(i,n*n){
+            int l;cin>>l;
+            // mp.insert({l,1);
+            hash[l]++;
+            // nums.push_back(l);
+            MIN= min(MIN, l);
+        }
+        FOR(i,n){
+            int Row_Min= MIN;
+            Row_Min+=i*d;
+            FOR(j,n){
+                hash[Row_Min+j*c]--;
+            }
+            
+        }
+        bool val;
+        for(auto it: hash){
+            if(it!=0){
+                val= true;
+                break;
+            }
+        }
+        if(val){
+            cout<<"NO"<<endl;
+        }
+        else{
+            cout<<"YES"<<endl;
+        }
         
     }
     return 0;

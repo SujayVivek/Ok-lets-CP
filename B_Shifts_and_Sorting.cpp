@@ -17,7 +17,24 @@ typedef vector<long long> vll;
 int main(){
     int t;cin>>t;
     while(t--){
+        string s;
         
+        cin>>s;
+        long long n=s.size();
+        long long r=0,l=0;long long sum=0;
+        while(1){
+            if(r==n){
+                break;
+            }
+            if(s[r]=='1'){
+                l++;
+            }
+            else if(s[r]=='0' && l!=0){
+                sum+=l+1;
+            }
+            r++;
+        }
+        cout<<sum<<endl;
     }
     return 0;
 }
