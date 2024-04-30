@@ -8,34 +8,45 @@
                                                                                                                      
 #include <bits/stdc++.h>
 using namespace std;                                                                                                                     
-#define FOR(a,c)   for ( long long (a)=1; (a)<(c); (a)++)
-typedef vector<long long> vi;
-// typedef vector<long long> vll;
+#define FOR(a,c)   for ( int (a)=0; (a)<(c); (a)++)
+typedef vector<int> vi;
+typedef vector<long long> vll;
 #define PB push_back
 #define ll long long
+
+const int N = 1e6+5;
+int arr[N], b[N];
+void problemA(){
+    int n;cin>>n;
+    for(int i=0;i<=n;i++){
+        cin>>arr[i];
+    }
+    for(int i=1;i<=n;i++){
+        cin>>b[i];
+    }
+    int count =0;
+    while(1){
+        sort(arr+1,arr+1+n);
+        bool check= true;
+        for(int i=1;i<=n;i++){
+            if(arr[i]>b[i]){
+                check= false;
+                break;
+            }
+            
+        }
+        if(check==true)break;
+
+            arr[n]=0;
+            count++;
+    }
+    cout<<count<<endl;
+}
 
 int main(){
     int t;cin>>t;
     while(t--){
-        long long n;cin>>n;
-        vi p(n+1,0);
-        p[0]=0;
-        FOR(i,n+1){
-            cin>>p[i];
-            // p[i]=p[i]-1;
-        }
-        long long ctr=0;
-        FOR(i,n+1){
-            if(p[i]==p[p[i]]){
-                ctr=1;break;
-            }
-        }
-        if(ctr==1){
-            cout<<"2"<<endl;
-        }
-        else{
-            cout<<"3"<<endl;
-        }
+        problemA();
     }
     return 0;
 }

@@ -8,9 +8,9 @@
                                                                                                                      
 #include <bits/stdc++.h>
 using namespace std;                                                                                                                     
-#define FOR(a,c)   for ( long long (a)=1; (a)<(c); (a)++)
-typedef vector<long long> vi;
-// typedef vector<long long> vll;
+#define FOR(a,c)   for ( long long (a)=0; (a)<(c); (a)++)
+typedef vector<int> vi;
+typedef vector<long long> vll;
 #define PB push_back
 #define ll long long
 
@@ -18,24 +18,28 @@ int main(){
     int t;cin>>t;
     while(t--){
         long long n;cin>>n;
-        vi p(n+1,0);
-        p[0]=0;
-        FOR(i,n+1){
-            cin>>p[i];
-            // p[i]=p[i]-1;
+        vll a(n,0),b(n,0);
+        FOR(i,n){
+            cin>>a[i];
         }
-        long long ctr=0;
-        FOR(i,n+1){
-            if(p[i]==p[p[i]]){
-                ctr=1;break;
+        FOR(i,n){
+            cin>>b[i];
+        }long long ctr=0;
+        long long ans=0;
+        FOR(i,n){
+            ctr=0;
+            // int k=i;
+            for(int j=i;j<n;j++){
+                if(a[i]>b[j]){
+                    ctr++;
+                }
+                else{
+                    break;
+                }
             }
+            ans= max(ans,ctr);
         }
-        if(ctr==1){
-            cout<<"2"<<endl;
-        }
-        else{
-            cout<<"3"<<endl;
-        }
+        cout<<ans<<endl;
     }
     return 0;
 }
