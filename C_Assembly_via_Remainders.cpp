@@ -14,30 +14,28 @@ typedef vector<long long> vll;
 #define PB push_back
 #define ll long long
 
-int Solve(int ind,int n,int msum, vi &v ,int sum,int k){
-  if(ind==n-1){
-    return msum;
-  }
-  if(k==0){
-    return msum;
-  }
-
-  if(ind==0) Solve(ind+1,n,min())
-}
-
 int main(){
     int t;cin>>t;
     while(t--){
-      int n,k;cin>>n>>k;
-      vi v(n,0);
-      int sum=0;
-      FOR(i,n){
-        cin>>v[i];
-        sum+=v[i];
-      } 
-      int ans= Solve();
-
-
+        int n;cin>>n;
+        vll v1(n-1,0);
+        int Max=0;
+        for(int i=0;i<n-1;i++){
+            
+            cin>>v1[i];
+            int l=v1[i];
+            Max= max(Max,l);
+        }
+        vll ans(n,0);
+        ans[0]=Max+1;
+        for(int i=1;i<n;i++){
+            ans[i]= ans[i-1]+v1[i-1];
+        }
+        for(int i=0;i<n;i++){
+            cout<<ans[i]<<" ";
+        }
+        cout<<endl;
+        
     }
     return 0;
 }
