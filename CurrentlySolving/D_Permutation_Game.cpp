@@ -15,24 +15,24 @@ typedef vector<long long> vll;
 #define ll long long
 
 
-int SolveBodya(int Pb,vi &p,vi &a,int k){
+int SolveBodya(int Pb,vi &p,vi &a,long long k){
     if(k==0){
         return 0;
     }
     int sum=0;int sum1=0,sum2=0;
     int newPos= p[Pb];
-    sum1 = a[Pb]+ SolveBodya(newPos,p,a,k-1);
+    sum1 = a[Pb]+ SolveBodya(newPos-1,p,a,k-1);
     sum2 = a[Pb] + SolveBodya(Pb,p,a,k-1);
 
     return max(sum1,sum2);
 }
-int SolveSasha(int Ps,vi &p,vi &a,int k){
+int SolveSasha(int Ps,vi &p,vi &a,long long k){
     if(k==0){
         return 0;
     }
     int sum=0;int sum1=0,sum2=0;
     int newPos= p[Ps];
-    sum1 = a[Ps]+ SolveSasha(newPos,p,a,k-1);
+    sum1 = a[Ps]+ SolveSasha(newPos-1,p,a,k-1);
     sum2 = a[Ps] + SolveSasha(Ps,p,a,k-1);
 
     return max(sum1,sum2);
@@ -40,7 +40,7 @@ int SolveSasha(int Ps,vi &p,vi &a,int k){
 int main(){
     int t;cin>>t;
     while(t--){
-        int n,k,Pb,Ps;cin>>n>>k>>Pb>>Ps;
+        int n,Pb,Ps;long long k;cin>>n>>k>>Pb>>Ps;
         vi p(n,0),a(n,0);
         FOR(j,n){
             cin>>p[j];
@@ -48,8 +48,8 @@ int main(){
         FOR(i,n){
             cin>>a[i];
         }
-        int Bodya= SolveBodya(Pb,p,a,k);
-        int Sasha= SolveSasha(Ps,p,a,k);
+        int Bodya= SolveBodya(Pb-1,p,a,k);
+        int Sasha= SolveSasha(Ps-1,p,a,k);
 
         if(Bodya>Sasha){
             cout<<"Bodya"<<endl;
