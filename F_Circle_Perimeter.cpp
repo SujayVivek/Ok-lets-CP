@@ -1,31 +1,45 @@
-#include <iostream>
-#include <cmath>
-using namespace std;
 
-int countLatticePoints(int r) {
-    int count = 0;
-    
-    for (int x = -r; x <= r; ++x) {
-        for (int y = -r; y <= r; ++y) {
-            
-            double distance = sqrt(x * x + y * y);
-            if (distance >= r && distance < r + 1) {
-                count++;
-            }
+//   _______ _     _                     _        _        __             _   _            _                            
+//  |__   __| |   (_)                   | |      (_)      / _|           | | | |          (_)                           
+//     | |  | |__  _ ___    ___ ___   __| | ___   _ ___  | |_ ___  _ __  | |_| |__   ___   _ _ __  ___  __ _ _ __   ___ 
+//     | |  | '_ \| / __|  / __/ _ \ / _` |/ _ \ | / __| |  _/ _ \| '__| | __| '_ \ / _ \ | | '_ \/ __|/ _` | '_ \ / _ \
+//     | |  | | | | \__ \ | |_| (_) | |_| |  __/ | \__ \ | || (_) | |    | |_| | | |  __/ | | | | \__ \ |_| | | | |  __/
+//     |_|  |_| |_|_|___/  \___\___/ \__,_|\___| |_|___/ |_| \___/|_|     \__|_| |_|\___| |_|_| |_|___/\__,_|_| |_|\___|
+                                                                                                                     
+#include <bits/stdc++.h>
+using namespace std;                                                                                                                     
+#define FOR(a,c)   for ( int (a)=0; (a)<(c); (a)++)
+typedef vector<int> vi;
+typedef vector<long long> vll;
+#define PB push_back
+#define ll long long
+
+void solve()
+{
+    long long r;
+    cin >> r;
+    long long height = r;
+    long long ans = 0;
+    for(long long i = 0; i <= r; i++)
+    {
+        while(i*i+height*height >= (r+1)*(r+1))
+        {
+            height--;
+        }
+        long long in_height = height;
+        while(i*i+in_height*in_height >= r*r && in_height > 0)
+        {
+            in_height--;
+            ans++;
         }
     }
-    return count;
+    cout << ans*4 << endl;
 }
-
-int main() {
-    int t;
+ 
+int main(){
+    int t = 1;
     cin >> t;
-
     while (t--) {
-        int r;
-        cin >> r;
-        cout << countLatticePoints(r) << endl;
+        solve();
     }
-
-    return 0;
 }
