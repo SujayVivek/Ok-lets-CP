@@ -9,55 +9,34 @@
 #include <bits/stdc++.h>
 using namespace std;                                                                                                                     
 #define FOR(a,c)   for ( int (a)=0; (a)<(c); (a)++)
-#define FORI(a,c)   for ( int (a)=1; (a)<(c); (a)++)
 typedef vector<int> vi;
 typedef vector<long long> vll;
 #define PB push_back
 #define ll long long
 
-int main(){
-    int t;cin>>t;
-    while(t--){
-        int n, k, q;
-    cin >> n >> k >> q;
-    vector<long long> a(k+1), b(k+1);
-    a[0] = 0;
-    b[0] = 0;
-    for(int i = 1; i <= k; i++)
+void solve()
+{
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    map<int, priority_queue<int>> mp;
+    for(int i = 0; i < n; i++)
     {
         cin >> a[i];
+        mp[a[i]>>2].push(-a[i]);
     }
-    for(int i = 1; i <= k; i++)
+    for(int i = 0; i < n; i++)
     {
-        cin >> b[i];
-    }
-    for(int i = 0; i < q; i++)
-    {
-        long long c;
-        cin >> c;
-        int l = 0, r = k;
-        while(l <= r)
-        {
-            int mid = l+r>>1;
-            if(a[mid] > c)
-            {
-                r = mid-1;
-            }
-            else
-            {
-                l = mid+1;
-            }
-        }
-        if(a[r] == c)
-        {
-            cout << b[r] << " ";
-            continue;
-        }
-        long long ans = b[r] + (c-a[r])*(b[r+1]-b[r])/(a[r+1]-a[r]);
-        cout << ans << " ";
+        cout << -mp[a[i]>>2].top() << " ";
+        mp[a[i]>>2].pop();
     }
     cout << endl;
+}
+ 
+int32_t main(){
+    int t = 1;
+    cin >> t;
+    while (t--) {
+        solve();
     }
-    
-    return 0;
 }
