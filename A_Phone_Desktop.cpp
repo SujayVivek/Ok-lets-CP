@@ -34,24 +34,25 @@ typedef vector<long long> vll;
 
 void Solve() {
     // Your code for each test case goes here
-    int x, y;
+    ll x, y;
     cin>>x>>y;
-    int ans= 0;
+    ll ans= 0;
     if(x==0 && y==0){
         cout<<"0"<<endl; return;
     }
-    else if(y==0 && x<=15){
-        cout<<"1"<<endl; return;
-    }
+    
     if(y%2==1){
         ans+= y/2 +1;
-        int newAns = ((ans-1)*7 + 11 >= x)? 0: (((x - (11+ (ans-1)*7))/15)==0? 1: (x - (11+ (ans-1)*7))/15);
-        ans+= newAns;
+        ll space_left = (ans-1)*7 + 11;
+        x= max(1ll*0, x-space_left);
+        ans+= (x+14)/15;
     }
     else{
         ans = y/2;
-        int newAns = ((ans*7)>=x)? 0 : ((((x- (ans*7))/15)==0)? 1: ((x- (ans*7))/15));
-        ans+= newAns;
+        ll space_left = ans*7;
+        x= max(1ll*0, x-space_left);
+        ans+= (x+14)/15;
+        
     }
     cout<<ans<<endl;
     return;
