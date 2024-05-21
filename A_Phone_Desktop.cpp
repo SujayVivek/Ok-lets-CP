@@ -30,39 +30,32 @@ typedef long double lld;
 typedef vector<int> vi;
 typedef vector<pair<ll, ll>> vpii;
 typedef vector<vi> vvi;
-typedef vector<vll> vvll;
 typedef vector<long long> vll;
 
 void Solve() {
     // Your code for each test case goes here
-    int n;cin>>n;
-    vvll ve(n/2, vll(2)), vo(n/2, vll(2));
-    // vvll voo;
-    int index =0;
-    loop(i,0,n){
-        ll p; cin>>p;
-        if(i%2==0){
-            ve[i/2]= {i, p};
-        }
-        else{
-            vo[i/2]={i,p};
-        }
-        if(p==n){
-            index = i;
-        }
+    int x, y;
+    cin>>x>>y;
+    int ans= 0;
+    if(x==0 && y==0){
+        cout<<"0"<<endl; return;
     }
-    vvll ans(n,vll(2));
-    int k = 0;
-    if(index %2 ==0){
-        //take first 2 nums
-        sort(all(ve));
-        ans[k]= {ve[0][]}
-        
-
+    else if(y==0 && x<=15){
+        cout<<"1"<<endl; return;
+    }
+    if(y%2==1){
+        ans+= y/2 +1;
+        int newAns = ((ans-1)*7 + 11 >= x)? 0: (((x - (11+ (ans-1)*7))/15)==0? 1: (x - (11+ (ans-1)*7))/15);
+        ans+= newAns;
     }
     else{
-        //take last 2 nums
+        ans = y/2;
+        int newAns = ((ans*7)>=x)? 0 : ((((x- (ans*7))/15)==0)? 1: ((x- (ans*7))/15));
+        ans+= newAns;
     }
+    cout<<ans<<endl;
+    return;
+
 
 }
 
@@ -82,8 +75,8 @@ int32_t main() {
         Solve();
     }
 
-    auto end = chrono::high_resolution_clock::now();
-    auto elapsed = chrono::duration_cast<chrono::nanoseconds>(end - begin);
-    cerr << "Time measured: " << elapsed.count() * 1e-9 << " seconds.\n";
+    // auto end = chrono::high_resolution_clock::now();
+    // auto elapsed = chrono::duration_cast<chrono::nanoseconds>(end - begin);
+    // cerr << "Time measured: " << elapsed.count() * 1e-9 << " seconds.\n";
     return 0;
 }
