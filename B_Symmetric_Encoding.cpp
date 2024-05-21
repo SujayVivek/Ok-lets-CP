@@ -15,7 +15,7 @@ mt19937_64 RNG(chrono::steady_clock::now().time_since_epoch().count());
 #define MOD 1000000007
 typedef long long ll;
 #define loop(ii, i, n) for (ll ii = i; ii < n; ++ii)
-#define loopm(ii, i, n, p) for (ll ii = i; ii < n; ii+p)
+#define loopm(ii, i, n, p) for (ll ii = i; ii < n; ii+=p)
 #define INF 1e18
 #define endl "\n"
 #define pb push_back
@@ -30,29 +30,49 @@ typedef long double lld;
 typedef vector<int> vi;
 typedef vector<pair<ll, ll>> vpii;
 typedef vector<vi> vvi;
-typedef vector<vll> vvll;
 typedef vector<long long> vll;
+typedef vector<vll> vvll;
 
 void Solve() {
-    // Your code for each test case goes here
+    int b;
+    cin >> b;
+    string s;
+    cin >> s;
+    set <char> st;
+    loop(i,0,b){
+        st.insert(s[i]);
+
+    }
+    vector<char> p;
+    for(auto it: st){
+        p.push_back(it);
+    }
+    int q= p.size();
+    map<char, char> mp;
+    int j = q - 1;
+
+    loop(i, 0, q) {
+        mp.insert({p[i], p[j]});
+        j--;
+    }
+    loop(i,0,b){
+        auto it = mp.find(s[i]);
+        cout<<(*it).second;
+    }cout<<endl;
+    
 }
 
-int32_t main() {
+int main() {
     auto begin = chrono::high_resolution_clock::now(); // Initialize the begin time measurement
 
     fastio();
-    // #ifndef ONLINE_JUDGE
-    //     freopen("error.txt", "w", stderr);
-    //     freopen("input.txt", "r", stdin);
-    //     freopen("output.txt", "w", stdout);
-    // #endif
-    
     int tt_ = 1;
     cin >> tt_;
     while (tt_--) {
         Solve();
     }
 
+    // Uncomment to measure time
     // auto end = chrono::high_resolution_clock::now();
     // auto elapsed = chrono::duration_cast<chrono::nanoseconds>(end - begin);
     // cerr << "Time measured: " << elapsed.count() * 1e-9 << " seconds.\n";

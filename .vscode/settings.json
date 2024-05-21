@@ -4,6 +4,7 @@
         "ostream": "cpp",
         "cmath": "cpp",
         "random": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "regex": "cpp"
     }
 }
