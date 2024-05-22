@@ -20,7 +20,7 @@ typedef long long ll;
 #define endl "\n"
 #define pb push_back
 #define ppb pop_back
-#define mp make_pair
+#define MP make_pair
 #define ff first
 #define ss second
 #define sz(x) ((int)(x).size())
@@ -30,11 +30,37 @@ typedef long double lld;
 typedef vector<int> vi;
 typedef vector<pair<ll, ll>> vpii;
 typedef vector<vi> vvi;
-typedef vector<vll> vvll;
+
 typedef vector<long long> vll;
+typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
+    int n;cin>>n;
+    vi v(n,0);
+    loop(i,0,n){
+        cin>>v[i];
+    }
+    map<vi, int> mp;
+    ll ans = 0;
+ 
+    for (int i = 0; i < n - 2; ++i)
+    {
+        int x = v[i], y = v[i + 1], z = v[i + 2];
+        ans += mp[{x, y, 0}] - mp[{x, y, z}];
+        ans += mp[{0, y, z}] - mp[{x, y, z}];
+        ans += mp[{x, 0, z}] - mp[{x, y, z}];
+ 
+        ++mp[{x, y, 0}];
+        ++mp[{0, y, z}];
+        ++mp[{x, 0, z}];
+        ++mp[{x, y, z}];
+    }
+ 
+    cout << ans << "\n";
+    return;
+    
+
 }
 
 int32_t main() {

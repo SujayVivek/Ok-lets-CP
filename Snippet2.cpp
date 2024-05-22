@@ -20,7 +20,7 @@ typedef long long ll;
 #define endl "\n"
 #define pb push_back
 #define ppb pop_back
-#define mp make_pair
+#define MP make_pair
 #define ff first
 #define ss second
 #define sz(x) ((int)(x).size())
@@ -30,8 +30,9 @@ typedef long double lld;
 typedef vector<int> vi;
 typedef vector<pair<ll, ll>> vpii;
 typedef vector<vi> vvi;
-typedef vector<vll> vvll;
+
 typedef vector<long long> vll;
+typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
