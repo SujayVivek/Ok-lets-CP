@@ -35,61 +35,28 @@ typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
 void Solve() {
-
-    int n;cin>>n;
-    string s;cin>>s;
-    map <char, int> mapp;
-    loop(i,0,n){
-            if(s[i]=='N'){
-                mapp['N']++;
-            }
-            else if(s[i]=='S'){
-                mapp['N']--;
-            }
-            else if(s[i]=='W'){
-                mapp['W']++;
-            }
-            else{
-                mapp['W']--;
-            }
+ string s; cin>>s;
+ int n = s.length();
+ map<char, int> hash;
+ unordered_map<int, pair<int,int>> sizeMap;
+ map<char, stack<int>> mapp;
+ loop(i,0,n){
+    mapp[s[i]].push(i);
+    hash[s[i]]++;
+    if(mapp[s[i]].size()==2){
+        int a= mapp[s[i]].top();mapp[s[i]].pop();
+        int b= mapp[s[i]].top();mapp[s[i]].pop();
+        mapp[s[i]].push(a);
+        int size = a-b;
+        sizeMap[size]= {b,a};
     }
-        map <int, char> ans2;int ctr1=0,ctr2=0;
-        if(s.length()==2 && (mapp['W']==0 && mapp['N']==0)){cout<<"NO"<<endl;return;}
 
-        if(s[0]=='N' || s[0]=='S'){
-            ans2[0]= 'R';ctr1=1;
-        }
-        else{
-            ans2[0]='R';
-            ctr2=1;
-        }
-        if(abs(mapp['N'])%2==0 && abs(mapp['W'])%2==0 ){
-            mapp['N']= abs(mapp['N'])-ctr1; mapp['W']= abs(mapp['W'])-ctr2;
-            loop(i,1,n){
-                mapp['N']= abs(mapp['N']); mapp['W']= abs(mapp['W']);
-                if((s[i]=='N' || s[i]=='S') && mapp['N']!=0){
-                    if(ctr1)
-                    ans2[i]= (mapp['N']%2? 'H':'R'); mapp['N']--;
-                    
+ }
+ int n_SM= sizeMap.size();
+  
 
-                }
-                else if((s[i]=='W' || s[i]=='E') && mapp['W']!=0){
-                    ans2[i]= (mapp['W']%2? 'H':'R'); mapp['W']--;
-                }
-                else{
-                    ans2[i]='H';
-                }
-            }
-            for(auto it: ans2){
-                cout<<it.second;
-            }cout<<endl;
-        }
-        else{
-            cout<<"NO"<<endl;
-        }
-        return;
+ return;
 }
-
 
 int32_t main() {
     auto begin = chrono::high_resolution_clock::now(); // Initialize the begin time measurement
