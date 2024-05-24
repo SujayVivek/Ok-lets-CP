@@ -34,15 +34,47 @@ typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
-void Solve() {
-    // Your code for each test case goes here
-    int n,a,b;
-    cin>>n>>a>>b;
-    vi v(n,0);
-    loop(i,0,n){
-        cin>>v[i];
+ll conquer_stay_same_pos(int ctr, int pos, vi &v, int a, int b){
+    // ll sum = travel;
+    ll sum = 0;
+    int n = v.size();
+    loop(i,ctr,n){
+        sum+= a*(v[ctr]-pos); 
     }
-    
+    return sum;
+}
+
+void Solve() {
+    int n, a, b;
+    cin >> n >> a >> b;
+    vi v(n, 0);
+    loop(i, 0, n) {
+        cin >> v[i];
+    }
+
+    int ctr = 0;
+    int pos = 0;
+    ll travel = 0;
+    ll ans = 0;
+    ll mn = LLONG_MAX;
+    ll conquer = 0;
+
+    while (ctr < n - 1) {
+        ll sum1 = travel + conquer + conquer_stay_same_pos(ctr, pos, v, a, b);
+        travel += b * (v[ctr] - pos);
+        conquer = a * (v[ctr] - pos);
+        pos = v[ctr];
+        ++ctr;
+        ll sum2 = travel + conquer + conquer_stay_same_pos(ctr, pos, v, a, b);
+
+        if (sum1 > sum2) {
+            mn = min(sum2, mn);
+        } else {
+            mn = min(sum1, mn);
+        }
+    }
+
+    cout << mn << endl;
 }
 
 int32_t main() {
