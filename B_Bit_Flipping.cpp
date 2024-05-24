@@ -36,12 +36,74 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
-    int n,k;cin>>n>>k;
-    int ctr=-1;
+    ll n,k;cin>>n>>k;
+    // int ctr=-1;
+    string s;
+    cin>>s;
+    vll ans(n,0);
+    vll hash(n,0);
     
     if(k%2==0){
+        ll j=0;
+        while(k-- && j<n){
+            if(s[j]=='1') {hash[j]=0; ans[j]=1;k++;}
+            else{ hash[j]++; ans[j]=1;}
+
+            j++;
+        }ll copyj = j;
+        if(j==n)k++;
+         j=n-1;
+        if(k>0){
+            if(k%2==1){
+                if(ans[j]==1){ans[j]=0; hash[j]+=k;}
+                else if(ans[j]==0){ans[j]=1;hash[j]+=k;}
+            }
+            else{
+                if(ans[j]==1){ans[j]=1; hash[j]+=k;}
+                else if(ans[j]==0){ans[j]=0;hash[j]+=k;}
+            }
+
+            
+        }
+        while(copyj<n){
+            ans[copyj]= (s[copyj]=='1'? 1:0);
+            copyj++;
+        }
 
     }
+    else{
+       ll j=0;
+        while(k-- && j<n){
+            if(s[j]=='1') {hash[j]++; ans[j]=1;}
+            else{ hash[j]=0; ans[j]=1;k++;}
+
+            j++;
+        }ll copyj= j;
+         if(j==n)k++; 
+        j=n-1;
+        if(k>0){
+            if(k%2==1){
+                if(ans[j]==1){ans[j]=0; hash[j]+=k;}
+                else if(ans[j]==0){ans[j]=1;hash[j]+=k;}
+            }
+            else{
+                if(ans[j]==1){ans[j]=1; hash[j]+=k;}
+                else if(ans[j]==0){ans[j]=0;hash[j]+=k;}
+            }
+
+            
+        }
+        while(copyj<n){
+            ans[copyj]= (s[copyj]=='1'? 0:1);
+            copyj++;
+        }
+    }
+    loop(i,0,n){
+        cout<<ans[i];
+    }cout<<endl;
+    loop(i,0,n){
+        cout<<hash[i]<<" ";
+    }cout<<endl;
 
 }
 
