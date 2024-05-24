@@ -39,42 +39,34 @@ ll conquer_stay_same_pos(int ctr, int pos, vi &v, int a, int b){
     ll sum = 0;
     int n = v.size();
     loop(i,ctr,n){
-        sum+= a*(v[ctr]-pos); 
+        sum+=1ll* b*(v[ctr]-pos); 
     }
     return sum;
 }
 
+ll move_to_new_pos(int ctr, int pos, vi &v, int a, int b){
+    return 1ll*(pos-0)*(a+b);
+}
+
 void Solve() {
-    int n, a, b;
-    cin >> n >> a >> b;
-    vi v(n, 0);
-    loop(i, 0, n) {
-        cin >> v[i];
-    }
-
-    int ctr = 0;
-    int pos = 0;
-    ll travel = 0;
-    ll ans = 0;
-    ll mn = LLONG_MAX;
-    ll conquer = 0;
-
-    while (ctr < n - 1) {
-        ll sum1 = travel + conquer + conquer_stay_same_pos(ctr, pos, v, a, b);
-        travel += b * (v[ctr] - pos);
-        conquer = a * (v[ctr] - pos);
-        pos = v[ctr];
-        ++ctr;
-        ll sum2 = travel + conquer + conquer_stay_same_pos(ctr, pos, v, a, b);
-
-        if (sum1 > sum2) {
-            mn = min(sum2, mn);
-        } else {
-            mn = min(sum1, mn);
+    int n,a,b;
+        cin>>n>>a>>b;
+        vll v(n,0);
+        for(int i=0;i<n;i++) cin>>v[i];
+        vll pref(n,0);
+        pref[0]=v[0];
+        for(int i=1;i<n;i++)
+            pref[i]=pref[i-1]+v[i];
+        ll ans= b*pref[n-1];
+        ll prev=b*v[0];
+        for(int i=0;i<n;i++)
+        {
+            ans= min(ans,prev+ (v[i]*a) + (pref[n-1]-pref[i]- ((n-1-i)*v[i]))*b);
+            if(i+1!=n)
+                prev+=(v[i+1]-v[i])*b ;
         }
-    }
-
-    cout << mn << endl;
+        cout<<ans<<endl;
+    // cout << mn << endl;
 }
 
 int32_t main() {
