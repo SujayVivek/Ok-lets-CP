@@ -36,6 +36,58 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
+    int n;cin>>n;
+    vll v(n,0);ll sum = 0;ll mx=0;
+    loop(i,0,n){
+        cin>>v[i];
+        sum+= v[i];
+        mx = max(mx, v[i]);
+    }
+   
+    //binary search
+    
+    
+    ll m;cin>>m;
+    while(m--){
+        ll copysum= sum;
+        ll copymx = mx;
+        ll coins=0;
+        ll Ddef, Datk;cin>>Ddef>>Datk;
+        if(copymx<Ddef){
+            coins+= Ddef-copymx;
+            copysum-=copymx;
+            coins+= ((copysum>=Datk)?0:(Datk-copysum));
+            // cout<<Ddef<<" "<<Datk<<endl;
+        }
+        else{
+            ll copymx = mx;
+            //binary search here
+            sort(all(v));
+            // cout<<mx<<"hi"<<endl;
+            ll low= 0;ll high = n-1;ll mid=0;int ctr=-1;
+            while(low<high){
+                mid = (low+high)/2;
+                if(v[mid]== Ddef){
+                    ctr=1;
+                    copymx = v[mid];break;
+                }
+                else if(v[mid]<Ddef){
+                    low= mid+1;
+                }
+                else{
+                    high = mid-1;
+                }
+            } 
+            if(ctr!=1)  
+            copymx = (mid!=0? v[mid-1]: v[mid]);
+            coins+= ((Ddef<=copymx)?0:(Ddef- copymx));
+            copysum-=copymx;
+            coins+= (copysum>Datk?0:Datk-copysum);
+
+        }
+        cout<<coins<<endl;
+    }
+
 }
 
 int32_t main() {
@@ -49,7 +101,7 @@ int32_t main() {
     // #endif
     
     int tt_ = 1;
-    cin >> tt_;
+    // cin >> tt_;
     while (tt_--) {
         Solve();
     }
