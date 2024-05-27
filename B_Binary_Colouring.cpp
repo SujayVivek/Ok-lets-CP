@@ -26,55 +26,36 @@ typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
-void solve_dp(vi &dp, int index, vi &ans, vi &hash, int x, vi &v) {
-    if (index < 0) {
-        if (accumulate(all(ans), 0) == x) {
-            for (auto it : hash) {
-                cout << it << " ";
-            }
-            cout << endl;
-        }
-        return;
-    }
-    
+void Solve(){
+    long long x;
+	cin >> x;
+	long long siz = 0;
+	vector <int> bin(32, 0);
+	int i = 0;
+	while(x>0){
+		bin[i++] = x%2;
+		x /= 2;
+	}
+	for (int i = 0; i<31; i++){
+		if (bin[i]==1 && bin[i+1]==1){
+			bin[i] = -1;
+			bin[i+1] = 0;
+			
+			int k = i+2;
+			while(bin[k]==1){
+				bin[k] = 0;
+				k++;
+			}
+			bin[k] = 1;
+		}
+	}
+	for (int i =0; i<32; i++) if (bin[i]!=0) siz = i;
+	cout << ++siz << '\n';
+	for (int i = 0; i<siz; i++) cout << bin[i] << ' ';
+	cout << '\n';
+}   
 
-    ans.push_back(v[index]); hash[index] = 1;
-    solve_dp(dp, index - 2, ans, hash, x, v);
-    ans.pop_back(); ans.push_back(-1 * v[index]); hash[index] = -1;
-    solve_dp(dp, index - 2, ans, hash, x, v);
-    ans.pop_back(); hash[index] = 0;
-    solve_dp(dp, index - 1, ans, hash, x, v);
-    return;
-}
-
-void Solve() {
-    int x; cin >> x;
-    int i = 1;
-    vll v;
-    v.push_back(0);
-    if(x==1){
-        cout<<1<<"\n"<<1<<endl;
-        return;
-    }
-    
-    while ((pow(2, i) - pow(2, i - 1)) <= x) {
-        v.push_back(pow(2, i));
-        i++;
-    }
-
-    int n = v.size();
-    vector<int> nums(n);
-    for (int j = 0; j < n; ++j) {
-        nums[j] = 1 << j; // 2^j
-    }
-    cout<<n<<endl;
-    vi hash(n, 0);
-    vi ans;
-    vi dp(n, -1);
-    solve_dp(dp, n - 1, ans, hash, x, nums);
-}
-
-int32_t main() {
+int main() {
     auto begin = chrono::high_resolution_clock::now(); // Initialize the begin time measurement
 
     fastio();
