@@ -1,4 +1,4 @@
-    #include <bits/stdc++.h>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -36,48 +36,7 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
-    int n, m, k;
-    cin>>n>>m>>k;
-    int arr[n][m];
-    int dp[n][m];
-    loop(i,0,n){
-        loop(j,0,m){
-            cin>>arr[i][j];
-            dp[i][j]=-1;
-        }
-    }
-    while(k--){
-        int c;cin>>c;
-        int j = c-1;int i =0;
-        while(i<n ){
-            if(dp[i][j]!=-1){
-                i= dp[i][j]/m;
-                j= dp[i][j]%m;
-            }
-            if(arr[i][j]==1){
-                //go right 
-                arr[i][j]=2;
-                dp[i][j] = m*(i+1) + (j+1);
-                j++;
-
-            } 
-            else if(arr[i][j]==3){
-                //go left 
-                arr[i][j]=2;
-                dp[i][j] = m*(i+1)+j+1; 
-                j--;
-            } 
-            else{
-                //go down
-                
-                dp[i][j] = m*(i+1)+j+1; 
-                i++;
-            }
-        }
-        cout<<j<<" ";
-    }
-    cout<<endl;
-
+    
 }
 
 int32_t main() {
@@ -91,7 +50,7 @@ int32_t main() {
     // #endif
     
     int tt_ = 1;
-    // cin >> tt_;
+    cin >> tt_;
     while (tt_--) {
         Solve();
     }
