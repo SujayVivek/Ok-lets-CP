@@ -70,11 +70,23 @@ void Solve() {
             else{
                 //go down
                 
-                dp[i][j] = m*(i+1)+j+1; 
-                i++;
+                // dp[i][j] = m*(i+1)+j+1; 
+                // i++;
+                int copyi = i;
+                while(arr[copyi][j]==2 && copyi<n){
+                    copyi++;
+                }
+                // i++;
+
+                if(i!=n-1)
+                loop(q,i,copyi-1){
+                  dp[q][j]=  m*(copyi)+j+1;
+                }
+                
+                i=copyi;
             }
         }
-        cout<<j<<" ";
+        cout<<j+1<<" ";
     }
     cout<<endl;
 

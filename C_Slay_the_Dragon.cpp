@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-
+#include <algorithm>
 using namespace std;
 
 //   _______ _     _                     _        _        __             _   _            _                            
@@ -34,58 +34,41 @@ typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
-void Solve() {
-    // Your code for each test case goes here
-    int n;cin>>n;
-    vll v(n,0);ll sum = 0;ll mx=0;
-    loop(i,0,n){
-        cin>>v[i];
-        sum+= v[i];
-        mx = max(mx, v[i]);
-    }
-   
-    //binary search
-    
-    
-    ll m;cin>>m;
-    while(m--){
-        ll copysum= sum;
-        ll copymx = mx;
-        ll coins=0;
-        ll Ddef, Datk;cin>>Ddef>>Datk;
-        if(copymx<Ddef){
-            coins+= Ddef-copymx;
-            copysum-=copymx;
-            coins+= ((copysum>=Datk)?0:(Datk-copysum));
-            // cout<<Ddef<<" "<<Datk<<endl;
+int bin_search(vector<int> &v, int low, int high, int target,int mid =0){
+    // int mid;
+    while(low<=high){
+        mid = (low+high)/2;
+        if(v[mid] == target){
+            return mid;
+        }
+        else if(v[mid]>target){
+            high = mid-1;
         }
         else{
-            ll copymx = mx;
-            //binary search here
-            sort(all(v));
-            // cout<<mx<<"hi"<<endl;
-            ll low= 0;ll high = n-1;ll mid=0;int ctr=-1;
-            while(low<high){
-                mid = (low+high)/2;
-                if(v[mid]== Ddef){
-                    ctr=1;
-                    copymx = v[mid];break;
-                }
-                else if(v[mid]<Ddef){
-                    low= mid+1;
-                }
-                else{
-                    high = mid-1;
-                }
-            } 
-            if(ctr!=1)  
-            copymx = (mid!=0? v[mid-1]: v[mid]);
-            coins+= ((Ddef<=copymx)?0:(Ddef- copymx));
-            copysum-=copymx;
-            coins+= (copysum>Datk?0:Datk-copysum);
-
+            low = mid+1;
         }
-        cout<<coins<<endl;
+    }
+    return mid;
+}
+
+void Solve() {
+    // Your code for each test case goes here
+    int n;
+  cin >> n;
+  vector<ll> a(n);
+  for (auto &x : a) cin >> x;
+  sort(a.begin(), a.end());
+  ll sum = accumulate(a.begin(), a.end(), 0LL);
+  int m;
+  cin >> m;
+  while (m--) {
+    ll x, y;
+    cin >> x >> y;
+    int i = lower_bound(a.begin(), a.end(), x) - a.begin();
+    ll ans = 2e18;
+    if (i > 0) ans = min(ans, (x - a[i - 1]) + max(0LL, y - sum + a[i - 1]));
+    if (i < n) ans = min(ans, max(0LL, y - sum + a[i]));
+    cout << ans << '\n';
     }
 
 }
