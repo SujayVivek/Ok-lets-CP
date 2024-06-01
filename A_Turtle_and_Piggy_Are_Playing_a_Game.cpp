@@ -36,6 +36,10 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
+    int l, r;
+    cin>>l>>r;
+    cout<< floor(log2(r));
+    cout<<endl;
 }
 
 int32_t main() {
