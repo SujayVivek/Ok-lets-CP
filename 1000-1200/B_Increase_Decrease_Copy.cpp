@@ -52,11 +52,12 @@ void Solve() {
             flag = 1;
         }
         if(!flag){
-           mn = min(mn, 2*min(abs(b[n]-a[i]), abs(b[n]-b[i])));
+           mn = min(mn, min(abs(b[n]-a[i]), abs(b[n]-b[i])));
+
         }
         
     }
-    cout<<sum+(flag? 1: mn)<<endl;
+    cout<<sum+(flag? 1: mn+1)<<endl;
 }
 
 int32_t main() {
