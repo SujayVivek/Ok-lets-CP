@@ -36,6 +36,29 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
+    ll n;cin>>n;
+    vll v(1e6,0);
+    ll maxD = 0;
+    ll minB = INT_MAX;
+    loop(i,0,n){
+        ll b, d;
+        cin>>b>>d;
+        v[b]++;
+        v[d]--;
+        minB = min(minB, b);
+        maxD = max(maxD, d);
+    }
+    ll sum = 0;
+    ll mx=0, index = 0;
+    loop(i,minB,maxD){
+        sum+= v[i];
+        if(sum> mx){
+            mx = sum;
+            index = i;
+        }
+
+    }
+    cout<<index<<" "<<mx<<endl;
 }
 
 int32_t main() {
@@ -49,7 +72,7 @@ int32_t main() {
     // #endif
     
     int tt_ = 1;
-    cin >> tt_;
+    // cin >> tt_;
     while (tt_--) {
         Solve();
     }
