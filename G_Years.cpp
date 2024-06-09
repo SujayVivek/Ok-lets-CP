@@ -36,27 +36,6 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
-    int n,x,y;
-    cin>>n>>x>>y;
-    vi v(x,0);
-    // vi hash(n, 0);
-   
-    loop(i,0,x){
-        cin>>v[i];
-    }
-    int ctr = 0;
-    sort(all(v));
-    loop(i,1,x){
-        if(v[i]-v[i-1] == 2){
-            ctr++;
-        }
-    }
-
-    if(v[0]+n - v[x-1] == 2){
-            ctr++;
-        }
-    cout<<ctr+ x-2<<endl;
-    // cout<<ctr<<endl;
 }
 
 int32_t main() {
