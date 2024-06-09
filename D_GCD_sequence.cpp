@@ -38,9 +38,9 @@ void Solve() {
     }
     loop(i,1,n){
         int gc = __gcd(v[i], v[i-1]);
-        cout<<"v[i]= "<<v[i]<<" ";
-        cout<<"v[i]-1= "<<v[i-1]<<endl;;
-        cout << "CTR= " << ctr << " GCD= " << gc << endl;
+        // cout<<"v[i]= "<<v[i]<<" ";
+        // cout<<"v[i]-1= "<<v[i-1]<<endl;;
+        // cout << "CTR= " << ctr << " GCD= " << gc << endl;
 
         if (gc >= mx) {
             mx = gc;
