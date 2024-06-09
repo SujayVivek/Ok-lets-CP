@@ -36,13 +36,37 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
-    ll l, r;
-    cin>>l>>r;ll sum = 0;
-    while(l!=0 || r!=0){
-        sum+= r-l;
-        l/=10;r/=10;
+    int n,x,y;
+    cin>>n>>x>>y;
+    vi v(x,0);
+    // vi hash(n, 0);
+    loop(i,0,x){
+        cin>>v[i];
+        // hash[v[i]]=1;
     }
-    cout<<sum<<endl;
+    int ctr = 0;
+    sort(all(v));
+    loop(i,1,x){
+        // if(v[i]-)
+        int target = v[i-1];
+        if(v[i]- target == 1 ) {
+            ctr+= (target==v[0]?0:1);
+            
+        }
+        else if(v[i]- target == 2){
+            ctr+= (target==v[0]?1:2);
+        }
+        else if((v[i]- target)>2 && i>=2){
+            ctr++;
+        }
+        
+        // cout<<ctr<<" "; 
+    }
+    if(v[0]+n - v[x-1] == 2){
+            ctr++;
+        }
+    cout<<ctr<<endl;
+    // cout<<ctr<<endl;
 }
 
 int32_t main() {

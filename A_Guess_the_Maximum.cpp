@@ -36,13 +36,23 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
-    ll l, r;
-    cin>>l>>r;ll sum = 0;
-    while(l!=0 || r!=0){
-        sum+= r-l;
-        l/=10;r/=10;
+    ll n;cin>>n;
+    ll index = 0;
+    ll mn = INT_MAX;
+    vll v(n,0);
+    // int mn = INT_MAX;
+    loop(i,0,n){
+        cin>>v[i];
+        
     }
-    cout<<sum<<endl;
+    // int ans = min(v[index-1], v[index+1]);
+    ll mx = 0;
+    loop(i,1,n){
+        mx = max(v[i],v[i-1]);
+        mn = min(mn, mx);
+    }
+    cout<<mn-1<<endl;
+
 }
 
 int32_t main() {

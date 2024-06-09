@@ -36,13 +36,22 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
-    ll l, r;
-    cin>>l>>r;ll sum = 0;
-    while(l!=0 || r!=0){
-        sum+= r-l;
-        l/=10;r/=10;
+   int n;
+   vi v(n,0);
+
+   loop(i,0,n){
+    cin>>v[i];
+   }
+   int lcm;
+    loop(i,0,n){
+        if(i==0){
+            lcm = (v[i]*v[i+1])/__gcd(v[i],v[i+1]);
+        }
+        else{
+            lcm = (lcm* v[i])/__gcd(lcm,v[i]);
+        }
     }
-    cout<<sum<<endl;
+    
 }
 
 int32_t main() {

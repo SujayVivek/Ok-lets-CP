@@ -36,13 +36,7 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
-    ll l, r;
-    cin>>l>>r;ll sum = 0;
-    while(l!=0 || r!=0){
-        sum+= r-l;
-        l/=10;r/=10;
-    }
-    cout<<sum<<endl;
+    
 }
 
 int32_t main() {
