@@ -2,13 +2,6 @@
 
 using namespace std;
 
-//   _______ _     _                     _        _        __             _   _            _                            
-//  |__   __| |   (_)                   | |      (_)      / _|           | | | |          (_)                           
-//     | |  | |__  _ ___    ___ ___   __| | ___   _ ___  | |_ ___  _ __  | |_| |__   ___   _ _ __  ___  __ _ _ __   ___ 
-//     | |  | '_ \| / __|  / __/ _ \ / _` |/ _ \ | / __| |  _/ _ \| '__| | __| '_ \ / _ \ | | '_ \/ __|/ _` | '_ \ / _ \
-//     | |  | | | | \__ \ | |_| (_) | |_| |  __/ | \__ \ | || (_) | |    | |_| | | |  __/ | | | | \__ \ |_| | | | |  __/
-//     |_|  |_| |_|_|___/  \___\___/ \__,_|\___| |_|___/ |_| \___/|_|     \__|_| |_|\___| |_|_| |_|___/\__,_|_| |_|\___|
-
 mt19937_64 RNG(chrono::steady_clock::now().time_since_epoch().count());
 
 #define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
@@ -35,30 +28,32 @@ typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
 void Solve() {
-    // Your code for each test case goes here
-    ll n;cin>>n;
-    vll v(1e6,0);
+    ll n; cin >> n;
+    map<ll, ll> events;
     ll maxD = 0;
-    ll minB = INT_MAX;
-    loop(i,0,n){
+    ll minB = LLONG_MAX;
+    
+    loop(i, 0, n) {
         ll b, d;
-        cin>>b>>d;
-        v[b]++;
-        v[d]--;
+        cin >> b >> d;
+        events[b]++;
+        events[d ]--;  
         minB = min(minB, b);
         maxD = max(maxD, d);
     }
+    
     ll sum = 0;
-    ll mx=0, index = 0;
-    loop(i,minB,maxD){
-        sum+= v[i];
-        if(sum> mx){
+    ll mx = 0, index = 0;
+    
+    for (auto& event : events) {
+        sum += event.second;
+        if (sum > mx) {
             mx = sum;
-            index = i;
+            index = event.first;
         }
-
     }
-    cout<<index<<" "<<mx<<endl;
+    
+    cout << index << " " << mx << endl;
 }
 
 int32_t main() {
