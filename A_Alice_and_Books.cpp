@@ -15,7 +15,7 @@ mt19937_64 RNG(chrono::steady_clock::now().time_since_epoch().count());
 #define MOD 1000000007
 typedef long long ll;
 #define loop(ii, i, n) for (ll ii = i; ii < n; ++ii)
-#define loopm(ii, i, n, p) for (ll ii = i; ii < n; ii+=p)
+#define loopm(ii, i, n, p) for (ll ii = i; ii < n; ii+p)
 #define INF 1e18
 #define endl "\n"
 #define pb push_back
@@ -34,44 +34,17 @@ typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
-bool comp(const vi &a, const vi &b) {
-    return a[1] > b[1];
-}
-
 void Solve() {
-    int n, m, k;
-    cin >> n >> m >> k;
-    vvi v;
-    loop(i, 0, n) {
-        int l; 
-        cin >> l;
-        v.push_back({l, i + 1});
+    // Your code for each test case goes here
+    int n;cin>>n;
+    vi v(n,0);
+    int mx = 0;
+    loop(i,0,n){
+        cin>>v[i];
+        if(i!=n-1)
+        mx = max(mx, v[i]);
     }
-    
-    sort(all(v));
-    
-    int num_of_buys = ceil(k / m);
-    vvi v2(num_of_buys, vi(2));
-    
-    loop(i, 0, num_of_buys) {
-        v2[i] = {v[i][0], v[i][1]};
-    }
-    
-    sort(all(v2), comp);
-    cout<<num_of_buys;
-    loop(i,0,v2.size()){
-        cout<<v2[i][0]<<" "<<v2[i][1]<<endl;;
-    }
-    
-    int sum = 0;
-    int i = 0;
-    while (num_of_buys > 0) {
-        num_of_buys--;
-        sum += (v2[i][1] + 1) * (num_of_buys - i) + (k >= m ? m : k) * v2[i][0];
-        i++;
-    }
-    
-    cout << sum << endl;
+    cout<<mx+ v[n-1]<<endl;
 }
 
 int32_t main() {
