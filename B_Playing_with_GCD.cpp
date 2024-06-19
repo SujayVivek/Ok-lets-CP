@@ -1,16 +1,16 @@
 #include <bits/stdc++.h>
- 
+
 using namespace std;
- 
+
 //   _______ _     _                     _        _        __             _   _            _                            
 //  |__   __| |   (_)                   | |      (_)      / _|           | | | |          (_)                           
 //     | |  | |__  _ ___    ___ ___   __| | ___   _ ___  | |_ ___  _ __  | |_| |__   ___   _ _ __  ___  __ _ _ __   ___ 
 //     | |  | '_ \| / __|  / __/ _ \ / _` |/ _ \ | / __| |  _/ _ \| '__| | __| '_ \ / _ \ | | '_ \/ __|/ _` | '_ \ / _ \
 //     | |  | | | | \__ \ | |_| (_) | |_| |  __/ | \__ \ | || (_) | |    | |_| | | |  __/ | | | | \__ \ |_| | | | |  __/
 //     |_|  |_| |_|_|___/  \___\___/ \__,_|\___| |_|___/ |_| \___/|_|     \__|_| |_|\___| |_|_| |_|___/\__,_|_| |_|\___|
- 
+
 mt19937_64 RNG(chrono::steady_clock::now().time_since_epoch().count());
- 
+
 #define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
 #define MOD 1000000007
 typedef long long ll;
@@ -30,56 +30,27 @@ typedef long double lld;
 typedef vector<int> vi;
 typedef vector<pair<ll, ll>> vpii;
 typedef vector<vi> vvi;
- 
+
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
- 
+
 void Solve() {
-    int n;cin>>n;
-    vi v(n,0); loop(i,0,n){cin>>v[i];}
-    int cnt = 1;int cnt2=1;int flag = 1;int ans = INT_MAX;
-    loop(i,0,n-1){
-        if(v[i]==v[i+1]){
-            if(flag ==1)
-                cnt++;
-            else{
-                cnt2++;
-            }
-
-        }
-        else{
-            if(flag ==-1){
-            ans = min(ans, cnt2);
-            ans = min(ans, cnt);
-            }
-
-            if(v[i]==v[i+2] && flag == 1){
-                i++; flag = -1;
-            }
-            else{
-                if(flag ==-1 && v[i]==v[i+2]){
-                flag = -1; cnt = cnt2; cnt2 = 1;
-                }
-                else{
-                    cout<<0<<endl;
-                    break;
-                }
-            }
+    // Your code for each test case goes here
+    int n;cin>>n; vi v(n,0); loop(i,0,n){cin>>v[i];}
+    
+    loop(i,1,n-1){
+        if((v[i]%(__gcd(v[i-1], v[i+1])))!=0){
+            cout<<"NO"<<endl;
+            return;
         }
     }
-    if(flag ==-1){
-        ans = min(ans, cnt2);
-        ans = min(ans, cnt);
-    }
-
+    cout<<"YES"<<endl;
+    return;
 }
- 
- 
- 
- 
+
 int32_t main() {
     auto begin = chrono::high_resolution_clock::now(); // Initialize the begin time measurement
- 
+
     fastio();
     // #ifndef ONLINE_JUDGE
     //     freopen("error.txt", "w", stderr);
@@ -92,7 +63,7 @@ int32_t main() {
     while (tt_--) {
         Solve();
     }
- 
+
     // auto end = chrono::high_resolution_clock::now();
     // auto elapsed = chrono::duration_cast<chrono::nanoseconds>(end - begin);
     // cerr << "Time measured: " << elapsed.count() * 1e-9 << " seconds.\n";
