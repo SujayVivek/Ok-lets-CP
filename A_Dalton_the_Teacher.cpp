@@ -36,7 +36,14 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
-    
+    int n;cin>>n;vi v(n,0);int ctr = 0;
+    loop(i,0,n){
+        cin>>v[i];
+        if(v[i]==(i+1)){
+            ctr++;
+        }
+    }
+    cout<<ctr/2 + ctr%2<<endl;
 }
 
 int32_t main() {

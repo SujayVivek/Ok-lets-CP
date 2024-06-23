@@ -9,9 +9,9 @@ using namespace std;
 //     | |  | | | | \__ \ | |_| (_) | |_| |  __/ | \__ \ | || (_) | |    | |_| | | |  __/ | | | | \__ \ |_| | | | |  __/
 //     |_|  |_| |_|_|___/  \___\___/ \__,_|\___| |_|___/ |_| \___/|_|     \__|_| |_|\___| |_|_| |_|___/\__,_|_| |_|\___|
 
-mt19937_64 RNG(chrono::steady_clock::now().time_since_epoch().count());
+// mt19937_64 RNG(chrono::steady_clock::now().time_since_epoch().count());
 
-#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
+// #define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
 #define MOD 1000000007
 typedef long long ll;
 #define loop(ii, i, n) for (ll ii = i; ii < n; ++ii)
@@ -36,13 +36,37 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
-    
+    ll n;cin>>n;
+    string T;cin>>T;
+    T = '0'+T;
+    ll sum = 0;
+    loop(i, 1, n + 1) {
+        if (T[i] == '0') {
+            sum += i;
+            ll k = 2;
+            if(k*i <= n) {
+                if (T[k*i] == '0') {
+                    sum += i;
+                }
+                T[k*i] = '2';
+            }
+        }
+        else if(T[i] == '2' && 2*i<= n){
+            
+            if(T[2*i] =='0'){
+                sum+= i;
+            }
+            T[2*i] = '2';
+        }
+        
+    }
+    cout << sum << endl;
 }
 
 int32_t main() {
     auto begin = chrono::high_resolution_clock::now(); // Initialize the begin time measurement
 
-    fastio();
+    // fastio();
     // #ifndef ONLINE_JUDGE
     //     freopen("error.txt", "w", stderr);
     //     freopen("input.txt", "r", stdin);

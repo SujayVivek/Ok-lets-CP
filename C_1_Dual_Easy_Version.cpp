@@ -34,9 +34,49 @@ typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
+void add_mx(int mx, vi &v, int mxInd){
+    int n = v.size();
+    vvi ans;
+    int k = 0;
+    loop(i,0,n-1){
+        if(v[i]> v[i+1]){
+            v[i]+= v[mxInd];  k++;
+            ans.push_back({i,mxInd});
+            i--;
+        }
+    }
+    cout<<k<<endl;
+    for(auto it: ans){
+        cout<< it[0] << " "<< it[1]<<endl;
+    }
+}
 void Solve() {
     // Your code for each test case goes here
-    
+    int n;cin>>n;vi v(n,0); int mx = 0, mn = INT_MAX, mxInd = 0, mnInd = 0;loop(i,0,n){ 
+        cin>>v[i]; 
+        if(v[i]>mx){mx = max(mx, v[i]); mxInd = i;}
+        if(v[i]<mn){n = min(mn, v[i]); mnInd = i;}
+        }
+    if(mx>0 && mn< 0){
+        if(mx > abs(mn)){
+            //go on adding mx to elements
+            add_mx(mx, v, mxInd);
+        }
+        else{
+            //go on adding mn to elements
+            add_mx(mn, v, mnInd);
+        }
+    }else{
+        if(mx>=0 && mn>=0){
+            //go on adding mx
+            add_mx(mx, v, mxInd);
+            
+        }else{
+            //go on adding mn
+            add_mx(mn, v, mnInd);
+        }
+    }
+    return;
 }
 
 int32_t main() {

@@ -36,6 +36,22 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
+    long long n; cin>>n; int ctr = 0; ll copyn = n;
+    list <int> v1;
+    
+    while(n){
+        v1.push_front(n%10);
+        ctr++; n/=10;
+    }
+    ll near_pow = (2, ctr);
+    string v2 = to_string(near_pow);
+    auto it = v1.begin();
+    loop(i,0,ctr){
+        if(*it != (int)v2[i] && it!=v1.end()){
+            it = v1.erase(it);
+            ctr++;
+        }
+    }
     
 }
 

@@ -34,9 +34,20 @@ typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
+
 void Solve() {
     // Your code for each test case goes here
-    
+    ll n;cin>>n; int ctr = 0;int x = 1;
+    if(n==1) {cout<<1<<endl; return;}
+    while(1){
+        if(n%x == 0 ){
+            ctr++;
+        }
+        else{
+            cout<< ctr<<endl;return;
+        }
+        x++;
+    }
 }
 
 int32_t main() {
