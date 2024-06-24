@@ -36,6 +36,24 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
+    int n;cin>>n;
+    string s; cin>>s;
+    int flag = -1;
+    loop(i,0,n){
+        if(s[i]=='0'){
+            flag = 1;
+            if(i< floor(n/2)){
+                cout<< i+1 << " "<< n <<" "<< i+2 << " "<< n <<endl;return;
+            }
+            else{
+                cout<< 1 << " "<< i+1 << " "<< 1 << " " << i<<endl;return;
+            }
+        }
+    }
+    if(flag==-1){
+        cout<< 1 << " "<< n-1<<" "<<2<<" "<< n<<endl;
+    }
+    return;
 }
 
 int32_t main() {
