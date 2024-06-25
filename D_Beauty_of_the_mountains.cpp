@@ -36,6 +36,7 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
+    
 }
 
 int32_t main() {
