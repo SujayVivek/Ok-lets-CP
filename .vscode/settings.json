@@ -6,6 +6,14 @@
         "random": "cpp",
         "chrono": "cpp",
         "regex": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "bitset": "cpp",
+        "vector": "cpp",
+        "memory": "cpp",
+        "system_error": "cpp",
+        "thread": "cpp",
+        "typeindex": "cpp",
+        "complex": "cpp",
+        "cstdlib": "cpp"
     }
 }
