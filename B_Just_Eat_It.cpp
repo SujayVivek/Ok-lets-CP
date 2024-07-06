@@ -35,31 +35,44 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
-    int n;cin>>n;
-    vector<int>a(n+1,0) ;
-    vector<int>b(n+1,0) ;
-    for(int i = 1 ; i <= n ; i++){
-        cin >> a[i] ;
+    ll n;cin>>n;
+    vll v(n,0);ll ctr=0,ctr1=0;ll sum = 0;ll sumpos=0,sumneg=0; vi ans;
+    loop(i,0,n){
+        cin>>v[i];
+        sum+=v[i];
+        if(v[i]<0){
+            sumneg+=v[i];
+            if(sumpos!=0)
+            ans.push_back(sumpos);
+            sumpos=0;
+        }else if(v[i]>0){
+            sumpos+=v[i];
+            if(sumneg!=0)
+            ans.push_back(sumneg);
+            sumneg=0;
+        }
     }
-    int ans = 0 ;  
-    for(int i = 1 ; i <= n ; i++){
-        int l ; cin >> l ;
-        b[l] = i ;
+    if(sumpos!=0)ans.push_back(sumpos);
+    else if(sumneg!=0)ans.push_back(sumneg);
+    if(v[0]<0 || v[n-1]<0){
+        cout<<"NO"<<endl;return;
     }
-    int ti = b[a[1]] ;
-    for(int i = 2 ; i <= n ; i++){
-        int ex = b[a[i]] ;
-        if(ex < ti) ans++ ;
-        ti = max(ti , ex) ;
+    // for(auto it:ans){
+    //     cout<<it<<"hi"<<endl;
+    // }
+    loop(i,0,ans.size()){
+        if(ans[i]<0){
+            if(i>0 && i<ans.size()-1 && (abs(ans[i])>=ans[i-1] || abs(ans[i])>=ans[i+1])){
+                cout<<"NO"<<endl;return;
+            }
+        }
     }
-    cout<<ans<<endl ;
-    return;
+    cout<<"YES"<<endl;return;
+
 }
 
-
-
 int32_t main() {
-    auto begin = chrono::high_resolution_clock::now(); // Initialize the begin ti measurement
+    auto begin = chrono::high_resolution_clock::now(); // Initialize the begin time measurement
 
     fastio();
     // #ifndef ONLINE_JUDGE
@@ -69,13 +82,13 @@ int32_t main() {
     // #endif
     
     int tt_ = 1;
-    // cin >> tt_;
+    cin >> tt_;
     while (tt_--) {
         Solve();
     }
 
     // auto end = chrono::high_resolution_clock::now();
     // auto elapsed = chrono::duration_cast<chrono::nanoseconds>(end - begin);
-    // cerr << "ti measured: " << elapsed.count() * 1e-9 << " seconds.\n";
+    // cerr << "Time measured: " << elapsed.count() * 1e-9 << " seconds.\n";
     return 0;
 }
