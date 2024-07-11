@@ -36,14 +36,12 @@ typedef vector<vll> vvll;
 void Solve() {
     // Your code for each test case goes here
     int n;cin>>n;
-    if(n==1){
-        cout<<4<<endl;return;
-    }
-    int b = 4*floor(n/2)*floor(n/2) + 4*floor(n/2);
+    int k = floor(n/2);
     if(n%2==0){
-        b+= (n+1)*4;
+        cout<< (k+1)*(k+1)<<endl;
+    }else{
+        cout<< 2*(k+1)*(k+2)<<endl;
     }
-    cout<< b<<endl;
 }
 
 int32_t main() {
