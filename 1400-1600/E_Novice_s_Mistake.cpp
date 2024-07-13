@@ -33,57 +33,35 @@ typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
-
-vi anz;
-int check(int md,int sum,int dif,int n){
-    int a = md;int b = md-dif;
-    b= min(10000,b);
-    return (a*n-b)>=sum;
-}
-void bs(int lo, int hi, int n,int dif,int ctr){
-    int sum = 0;int ans;int t = pow(10,ctr);
-    loop(i,0,dif){
-            sum+= n;
-            if(i!=dif-1)sum*=t;
-    }
-    while(lo<=hi){
-        int md = (lo+hi)/2;
-        
-        if(check(md,sum,dif,n)){
-            ans = md;
-            hi = md-1;
-        }else{
-            lo = md+1;
-        }
-    }
-    if(ans*n-(ans-dif)==sum){
-        anz.pb(ans);
-        anz.pb(ans-dif);
-    }
-    return;
-}
 void Solve() {
     // Your code for each test case goes here
-    int n;cin>>n;
-    int copyn = n;
-    int ctr = 0;
-    while(copyn){
-        ctr++;
-        copyn/=10;
+    ll n;
+    cin >> n;
+    string s = to_string(n);
+    int l = int(s.size());
+    vector<array<ll, 2>> anz;
+ 
+    for (int len = 1; len <= 6; len++) {
+        string V;
+ 
+        for (int i = 0; i < len; i++)
+            V += s[i % l];
+ 
+        int64_t value = stoll(V);
+ 
+        for (int64_t a = 1; a <= 10000; a++) {
+            int64_t b = n* a - value;
+ 
+            if (1 <= b && b <= 10000 && l * a - b == len)
+                anz.push_back({a, b});
+        }
     }
-    // bs(1,10,n,1);
-    bs(10,100,n,2,ctr);
-    bs(100, 1000, n,3,ctr);
-    bs(1000, 10000, n, 4,ctr);
+ 
+    cout << anz.size() << '\n';
+ 
+    for (auto &[a, b] : anz)
+        cout << a << ' ' << b << '\n';
 
-    int p = anz.size();
-    cout<< (p/2);
-    loop(i,0,p){
-        if(i%2==0)cout<<endl;
-        cout<< anz[i]<<" ";
-    }cout<<endl;
-
-    anz.clear();
     return;
 }
 
