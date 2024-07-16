@@ -42,7 +42,7 @@ void Solve() {
         n -= (k - 1);
         ans++;
     }
-    cout << ans;
+    cout << ans<<endl;
    
 }
 
