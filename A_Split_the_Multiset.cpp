@@ -33,37 +33,17 @@ typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
-int ct = 0; int ans = 0;
-
-int Solver(string s){
-    int p = s.length();
-    for(int i = 0;i<p;i++){
-        if(s[i]==')'){
-            ct--;
-        }else{
-            ct++;
-        }
-
-        if(ct<0){
-            ans++;ct = 0;
-        }
-    }
-    if(ct>=0){
-        ans+=ct;
-    }
-    return ans;
-}
-
-string z = ""
-int getMin(char *s) {
+void Solve() {
     // Your code for each test case goes here
-      z+= *s;
-    return 0;
-}
 
-int main(){
-    string s;
-    getSolver(z)
+    int n, k; cin >> n >> k;
+    int ans = 0;
+    while(n > 1) {
+        n -= (k - 1);
+        ans++;
+    }
+    cout << ans;
+   
 }
 
 int32_t main() {
