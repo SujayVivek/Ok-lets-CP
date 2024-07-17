@@ -35,33 +35,18 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
-    int n;
-    cin >> n;
+    ll n;cin>>n;
+    ll ans = __builtin_popcountll(n);
 
-    vector<int> start(n, 0), end(n, 0);
-    for (auto &x : start) cin >> x;
-    for (auto &x : end) cin >> x;
-    
-    long long arr[100001] = {0};  
-    int max_end = 0;
-    for (int i = 0; i < n; i++) {
-        if (start[i] >= 0 && start[i] < 100001) arr[start[i]]++;
-        if (end[i] < 100000) arr[end[i] + 1]--;
-        max_end = max(max_end, end[i]);
+    if(ans == 1){
+        cout<< 1 << endl << n << endl;
+        return;
     }
-
-    long long mx = arr[0];
-    long long mi = 0;  // Initialize mi to zero
-    for (int i = 1; i <= max_end; i++) {
-        arr[i] += arr[i - 1];
-        if (arr[i] > mx) {
-            mx = arr[i];
-            mi = i;
-        }
+    cout<<ans+1<<endl;
+    for(int i = 62; i >= 0; --i) {
+        if((n >> i) & 1LL) cout << n - (1LL << i) << ' ';
     }
-
-    return mi;
-    
+    cout << n<<endl;
 }
 
 int32_t main() {
@@ -75,7 +60,7 @@ int32_t main() {
     // #endif
     
     int tt_ = 1;
-    // cin >> tt_;
+    cin >> tt_;
     while (tt_--) {
         Solve();
     }
