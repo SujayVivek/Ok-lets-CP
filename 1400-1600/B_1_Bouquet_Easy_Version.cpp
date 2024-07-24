@@ -33,32 +33,41 @@ typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
+const ll N = 2e5 + 20;
+ll n, m, a[N];
 void Solve() {
     // Your code for each test case goes here
-    ll n, m;cin>>n>>m; vi a(n,0);
-    for(auto &x:a){
-        cin>>x;
-    }
-    sort(all(a));ll ans = 0;
-    for(int i = 0; i<n;){
-        ll j = i;
-        while(a[i]==a[j])j++;
 
-        ll l = j;
-        while(a[l]-a[i]==1)l++;
-
-        for(int q = 0; q<= j-i;q++){
-            if(q*a[i]>m)continue;
-
-            ll sumz = q*a[i];
-            int r = min(l-j, (m - sumz)/(a[i]+1));
-
-            sumz+= r*(a[i]+1);
-            ans = max(ans, sumz);
-        }
-        i = j;
-    }
-    cout<<ans<<endl;
+        cin >> n >> m;
+		for (int i = 0; i < n; i++) cin >> a[i];
+ 
+		ll ans = 0;
+ 
+		sort(a, a + n);
+		a[n] = -1;
+ 
+		for (int i = 0; i < n;) {
+			ll j = i;
+			while (a[j] == a[i]) j++;
+ 
+			ll l = j;
+			while (a[l] == a[i] + 1) l++;
+ 
+			for (int c = 0; c <= j - i; c++) {
+				if (c * a[i] > m) continue;
+ 
+				ll val = c * a[i];
+				ll t = min((m - val) / (a[i] + 1), l - j);
+ 
+				val += t * (a[i] + 1);
+ 
+				ans = max(ans, val);
+			}
+ 
+			i = j;
+		}
+ 
+		cout << ans << '\n';
 }
 
 int32_t main() {
