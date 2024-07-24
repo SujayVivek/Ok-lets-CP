@@ -36,29 +36,23 @@ typedef vector<vll> vvll;
 void Solve() {
     // Your code for each test case goes here
     int n;cin>>n;
-    vi v(n,0);
-    cin>>v[0]; vi hash;
-    int ct =1;
-    loop(i,1, n){
-        cin>>v[i];
-        if(v[i]*v[i-1]<0){
-            if(v[i]>0)
-            hash.pb(-1*ct);
-            else
-            hash.pb(ct);
-            ct = 1;
-        }else{
-            ct++;
+    vi a(n,0);
+    loop(i,0,n){
+        cin>>a[i];
+    }
+    int ct = 0;
+    loop(i,1,n){
+        if(a[i]<a[i-1]){
+            while(a[i]<a[i-1] && a[i]!=1){
+                int p = a[i];
+                a[i] = p*p;
+                ct++;
+            }
         }
     }
-    int sumP = 0, sumN = 0;
-    int m = hash.size();
-    loop(i,0,m){
-        if(hash[i]>0){
-            sumP+= 
-        }
-    }
-
+    if(!ct)cout<<-1<<endl;
+    else
+    cout<<ct<<endl;
 }
 
 int32_t main() {
