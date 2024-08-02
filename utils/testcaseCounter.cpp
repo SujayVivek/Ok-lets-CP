@@ -1,105 +1,94 @@
-1000
-rn
-ap
-v
-vn
-vr
-fxkx
-qd
-vfp
-iuqpibsiv
-xn
-jp
-eu
-tu
-ddxhk
-jx
-cp
-yg
-nj
-ke
-eg
-sx
-zx
-ki
-yncz
-yc
-ph
-ov
-x
-in
-dr
-cxjzwxvoy
-ug
-jcdhi
-ck
-d
-yn
-bf
-po
-zq
-i
-be
-xq
-gw
-ym
-oishtpha
-bt
-hr
-lj
-njeexyh
-xf
-fl
-g
-ev
-pm
-ch
-bm
-wy
-cu
-zh
-io
-lp
-ce
-baawuzmk
-sf
-phnzrxgx
-wz
-hr
-nnjcdoohg
-li
-yvvdqr
-oh
-xrnrhsajar
-cf
-ih
-zmguszcra
-b
-ur
-cg
-zv
-as
-qh
-ho
-ns
-eer
-zm
-od
-ryyysuzjim
-rg
-wnrqva
-pu
-pd
-xu
-jmcxe
-es
-ka
-hu
-wa
-ft
-sh
-ai
-uojf
-wk
-xt
-vi
+2
+1 1
+2
+1 2
+2
+2 1
+2
+2 2
+3
+1 1 1
+3
+1 1 2
+3
+1 1 3
+3
+1 2 1
+3
+1 2 2
+3
+1 2 3
+3
+1 3 1
+3
+1 3 2
+3
+1 3 3
+3
+2 1 1
+3
+2 1 2
+3
+2 1 3
+3
+2 2 1
+3
+2 2 2
+3
+2 2 3
+3
+2 3 1
+3
+2 3 2
+3
+2 3 3
+3
+3 1 1
+3
+3 1 2
+3
+3 1 3
+3
+3 2 1
+3
+3 2 2
+3
+3 2 3
+3
+3 3 1
+3
+3 3 2
+3
+3 3 3
+4
+1 1 1 1
+4
+1 1 1 2
+4
+1 1 1 3
+4
+1 1 1 4
+4
+1 1 2 1
+4
+1 1 2 2
+4
+1 1 2 3
+4
+1 1 2 4
+4
+1 1 3 1
+4
+1 1 3 2
+4
+1 1 3 3
+4
+1 1 3 4
+4
+1 1 4 1
+4
+1 1 4 2
+4
+1 1 4 3
+4
+1 1 4 4
