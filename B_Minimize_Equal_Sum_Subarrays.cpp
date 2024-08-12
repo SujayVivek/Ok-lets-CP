@@ -35,19 +35,15 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
-    ll n; cin>>n;
-	ll sum = 0;
-	vector<ll> a(n);
-	for(auto &i:a){
-		cin>>i;
-		sum+=i;
-	}
-	ll cur = 0, ans = sum;
-	for(int i=0;i<n;++i){
-		cur += a[i];
-		ans = max(ans,abs(cur) + (sum - cur));
-	}
-	cout<<ans<<'\n';
+    int n;cin>>n;
+    vi p(n,0);
+    loop(i,1,n){
+        cin>>p[i];
+    }
+    cin>>p[0];
+    for(auto it: p){
+        cout<<it<<" ";
+    }cout<<endl;return;
 }
 
 int32_t main() {

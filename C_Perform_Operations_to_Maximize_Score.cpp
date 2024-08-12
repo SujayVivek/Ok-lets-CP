@@ -35,21 +35,49 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
-    ll n; cin>>n;
-	ll sum = 0;
-	vector<ll> a(n);
-	for(auto &i:a){
-		cin>>i;
-		sum+=i;
-	}
-	ll cur = 0, ans = sum;
-	for(int i=0;i<n;++i){
-		cur += a[i];
-		ans = max(ans,abs(cur) + (sum - cur));
-	}
-	cout<<ans<<'\n';
+        int n, k; cin >> n >> k;
+        vector <pair<int, int>> vpp(n);
+        for (auto &x : vpp){
+            cin >> x.ff;
+        }
+        for (auto &x : vpp){
+            cin >> x.ss;
+        }
+        sort(all(vpp));
+        ll ans = 0;
+        loop(i,0,n){
+            if (vpp[i].ss == 1){
+                int med;
+                if (i < n / 2) med = vpp[n / 2].ff;
+                else med = vpp[(n - 2) / 2].ff;
+                
+                ans = max(ans, 0LL + vpp[i].ff + k + med);
+            }
+        } 
+        int lo = 0, hi = 2e9;
+        while (lo != hi){
+            int mid = (1LL + lo + hi) / 2;
+            int cnt = 0;
+            vector <int> Bef;
+            for (int i = 0; i < n - 1; i++){
+                if (vpp[i].ff >= mid){
+                    cnt++;
+                } else if (vpp[i].ss == 1){
+                    Bef.push_back(mid - vpp[i].ff); 
+                }
+            }
+            reverse(all(Bef));
+            int q = k;
+            for (auto x : Bef) if (q >= x){
+                q -= x;
+                cnt++;
+            } 
+            if (cnt >= (n + 1) / 2) lo = mid;
+            else hi = mid - 1;
+        }
+        ans = max(ans, 0LL + vpp[n - 1].ff + lo);
+        cout << ans << "\n";
 }
-
 int32_t main() {
     auto begin = chrono::high_resolution_clock::now(); // Initialize the begin time measurement
 
