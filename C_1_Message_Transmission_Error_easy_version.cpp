@@ -34,48 +34,25 @@ typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
 void Solve() {
-    ll n;
-    cin >> n;
-    vll a(n, 0), b(n, 0), pref(n, 0);
-    for (auto &x : a) {
-        cin >> x;
-    }
-    cin >> b[0];
-    pref[0] = b[0];
-    loop(i, 1, n) {
-        cin >> b[i];
-        pref[i] = b[i] + pref[i - 1];
-    }
-
-    if(n==1){
-        cout<< min(a[0],b[0])<<endl;return;
-    }
-    vi mult(n, 0), ad(n, 0);
-    ll p = 0;
-    loop(i, 0, n) {
-        if (i != 0) p = pref[i - 1];
-        ll dis = upper_bound(pref.begin() + i, pref.end(), a[i] + p) - pref.begin()-1;
-        if(dis==i-1){
-            ad[dis+1] = a[i];
-            continue;
-        }
-        mult[i]++;
-        if (dis < n-1) { 
-            mult[dis+1]--;
-            ad[dis+1] += a[i] - (pref[dis] - p);
+    // Your code for each test case goes here
+    string t;
+    cin >> t;
+ 
+    for (int i = 0; i < t.size(); ++i) {
+        for (int j = i; j < t.size(); ++j) {
+            if (i == 0 && j == t.size() - 1) {
+                continue;
+            }
+            string s1, s2;
+            s1 = t.substr(0, j + 1);
+            s2 = t.substr(i);
+            if (s1 == s2) {
+                cout << "YES\n" << s1;
+                return;
+            }
         }
     }
-
-    loop(i, 1, n) {
-        mult[i] += mult[i - 1];
-    }
-
-    loop(i, 0, n) {
-        cout << b[i] * mult[i] + ad[i] << " ";
-    }
-    
-    cout << endl;
-    return;
+    cout << "NO";
 }
 
 int32_t main() {
@@ -89,7 +66,7 @@ int32_t main() {
     // #endif
     
     int tt_ = 1;
-    cin >> tt_;
+    // cin >> tt_;
     while (tt_--) {
         Solve();
     }
