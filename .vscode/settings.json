@@ -23,6 +23,7 @@
         "unordered_map": "cpp",
         "unordered_set": "cpp",
         "initializer_list": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "iosfwd": "cpp"
     }
 }
