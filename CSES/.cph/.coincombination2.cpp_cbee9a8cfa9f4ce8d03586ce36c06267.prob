@@ -1,0 +1,1 @@
+{"name":"Local: coincombination2","url":"e:\\C_PROG\\CSES\\coincombination2.cpp","tests":[{"id":1725615417125,"input":"3 9\n2 3 5","output":"3"},{"id":1725615516802,"input":"\n1 1000000\n1","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\C_PROG\\CSES\\coincombination2.cpp","group":"local","local":true}
