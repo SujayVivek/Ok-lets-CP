@@ -32,32 +32,7 @@ typedef vector<pair<ll, ll>> vpii;
 typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
-
-vi palindromes;
-
-bool check(int n) {
-    string s = to_string(n);
-    int len = s.length();
-    for(int i = 0; i < len / 2; i++) {
-        if(s[i] != s[len - i - 1]) {
-            return false;
-        }
-    }
-    return true;
-}
-void Solve() {
-    // Your code for each test case goes here
-    int n;cin>>n;
-    vi dp(n+1, 0);
-    dp[0] = 1;
-    for(int palindrome: palindromes){
-        for(int i = palindrome; i<= n; i++){
-            dp[i] = (dp[i]+ dp[i-palindrome])%MOD;
-        }
-    }
-    cout<<dp[n]<<endl;return;
-}
-
+vi f(4e4+1, 0);
 int32_t main() {
     auto begin = chrono::high_resolution_clock::now(); // Initialize the begin time measurement
 
@@ -67,18 +42,21 @@ int32_t main() {
     //     freopen("input.txt", "r", stdin);
     //     freopen("output.txt", "w", stdout);
     // #endif
-    
-    int tt_ = 1;
-    cin >> tt_;
-    for(int i = 1; i <= 1e4; i++) {
-        if(check(i)) {
-            palindromes.push_back(i);
-        }
-    }
-    while (tt_--) {
-        Solve();
-    }
-
+    f[0]=1;
+	for(int i=1;i<=4e4;i++){
+		string a=to_string(i);
+		if(string(a.rbegin(),a.rend())==a){
+			for(int j=i;j<=4e4;j++)
+			    f[j]=(f[j]+f[j-i])%MOD;
+		}
+	}
+    int t;
+	cin>>t;
+	while(t--){
+		int n;
+		cin>>n;
+		cout<<f[n]<<endl;
+	}    
     // auto end = chrono::high_resolution_clock::now();
     // auto elapsed = chrono::duration_cast<chrono::nanoseconds>(end - begin);
     // cerr << "Time measured: " << elapsed.count() * 1e-9 << " seconds.\n";
