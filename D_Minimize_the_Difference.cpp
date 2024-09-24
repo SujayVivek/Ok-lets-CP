@@ -33,29 +33,12 @@ typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
-vi palindromes;
-
-bool check(int n) {
-    string s = to_string(n);
-    int len = s.length();
-    for(int i = 0; i < len / 2; i++) {
-        if(s[i] != s[len - i - 1]) {
-            return false;
-        }
-    }
-    return true;
-}
 void Solve() {
     // Your code for each test case goes here
     int n;cin>>n;
-    vi dp(n+1, 0);
-    dp[0] = 1;
-    for(int palindrome: palindromes){
-        for(int i = palindrome; i<= n; i++){
-            dp[i] = (dp[i]+ dp[i-palindrome])%MOD;
-        }
-    }
-    cout<<dp[n]<<endl;return;
+    vi a(n);
+    for(auto &x: a)cin>>x;
+    
 }
 
 int32_t main() {
@@ -70,11 +53,6 @@ int32_t main() {
     
     int tt_ = 1;
     cin >> tt_;
-    for(int i = 1; i <= 1e4; i++) {
-        if(check(i)) {
-            palindromes.push_back(i);
-        }
-    }
     while (tt_--) {
         Solve();
     }
