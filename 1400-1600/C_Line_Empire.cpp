@@ -30,43 +30,24 @@ typedef long double lld;
 typedef vector<int> vi;
 typedef vector<pair<ll, ll>> vpii;
 typedef vector<vi> vvi;
-
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
-ll conquer_stay_same_pos(int ctr, int pos, vi &v, int a, int b){
-    // ll sum = travel;
-    ll sum = 0;
-    int n = v.size();
-    loop(i,ctr,n){
-        sum+=1ll* b*(v[ctr]-pos); 
-    }
-    return sum;
-}
-
-ll move_to_new_pos(int ctr, int pos, vi &v, int a, int b){
-    return 1ll*(pos-0)*(a+b);
-}
-
 void Solve() {
-    int n,a,b;
-        cin>>n>>a>>b;
-        vll v(n,0);
-        for(int i=0;i<n;i++) cin>>v[i];
-        vll pref(n,0);
-        pref[0]=v[0];
-        for(int i=1;i<n;i++)
-            pref[i]=pref[i-1]+v[i];
-        ll ans= b*pref[n-1];
-        ll prev=b*v[0];
-        for(int i=0;i<n;i++)
-        {
-            ans= min(ans,prev+ (v[i]*a) + (pref[n-1]-pref[i]- ((n-1-i)*v[i]))*b);
-            if(i+1!=n)
-                prev+=(v[i+1]-v[i])*b ;
-        }
-        cout<<ans<<endl;
-    // cout << mn << endl;
+    // Your code for each test case goes here
+    ll n , a, b;cin>>n>>a>>b;
+    vll v(n), pref(n);
+    cin>>v[0]; pref[0] = v[0];
+    loop(i,1,n){
+        cin>>v[i];
+        pref[i] = v[i] + pref[i-1];
+    }
+    ll ans = b*pref[n-1];
+    loop(k,0,n){
+        ll com = a*(v[k]) + b*(v[k]) + b*(pref[n-1]-pref[k]-(n-k-1)*v[k]);
+        ans = min(ans, com);
+    }
+    cout<<ans<<endl;return;
 }
 
 int32_t main() {
