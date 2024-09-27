@@ -34,33 +34,36 @@ typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
 void Solve() {
-    int N;
-    cin >> N;
-    vector<vector<bool>> grid(2, vector<bool>(N + 1, false));
-    for (int i = 0; i < N; i++) {
-        int x, y;
-        cin >> x >> y;
-        grid[y][x] = true; 
-    }
-
+    // Your code for each test case goes here
+   ll n, k;
+    cin >> n >> k;
     
-    int64_t triangles = 0;
-
-    for (int x = 1; x < N; x++) {
-        for (int y = 0; y <= 1; y++) {
-            if (grid[y][x] && grid[!y][x - 1] && grid[!y][x + 1]) {
-                triangles++;
-            }
-        }
+    ll l = 0, r = n;
+    while (l < r){
+        ll mid = (l + r) / 2;
+        
+        ll v = (k + mid);
+        ll lo = (1LL * v * (v + 1) / 2 - 1LL * (k - 1) * (k) / 2);
+        ll hi = (1LL * (k + n - 1) * (k + n) / 2 - (v) * (v + 1) / 2);
+        
+        if (lo < hi) l = mid + 1;
+        else r = mid;
     }
-
-    for (int x = 0; x <= N; x++) {
-        if (grid[0][x] && grid[1][x]) {
-            triangles += N - 2; 
-        }
+    
+    set<ll> s;
+    s.insert(k + l);
+    s.insert(k + l - 1);
+    
+    ll ans = 1e18;
+    for (ll v : s){
+        ll lo = (1LL * v * (v + 1) / 2 - 1LL * (k - 1) * (k) / 2);
+        ll hi = (1LL * (k + n - 1) * (k + n) / 2 - (v) * (v + 1) / 2);
+        ans = min(ans, abs(hi - lo));
     }
-    cout << triangles << '\n';
+    
+    cout << ans << "\n";
 }
+
 
 
 int32_t main() {
