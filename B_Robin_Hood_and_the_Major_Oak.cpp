@@ -35,14 +35,20 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
-    int n, k;cin>>n>>k; bool ok = true;
-    if(n%2==0){
-        if(k%4!=0 && k!=1) ok = false;
+    int n; int k;cin>>n>>k;
+    int c = n-(k-1);
+    int ans = 0;
+    if(n%2==0 && c%2==0){
+        ans = (k-1)/2;
+    }else if(n%2==1 && c%2==0){
+        ans = (k-1)/2 + 1;
+    }else if(n%2==0 && c%2==1){
+        ans = (k-1)/2 + 1;
     }else{
-        if(k%3!=0 || k==1) ok = false;
+        ans = (k)/2 + 1;
     }
-    if(ok)cout<<"YES"<<endl;
-    else cout<<"NO"<<endl;return;
+    if(ans%2==0)cout<<"YES"<<endl;
+    else cout<<"NO"<<endl;
 }
 
 int32_t main() {
