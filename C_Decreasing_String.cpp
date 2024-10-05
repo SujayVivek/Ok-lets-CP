@@ -33,19 +33,30 @@ typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
-ll calc(int p){
-    return (p+2)*(p+1)/2;               //doing (p+3-1)C(3-1)
-}
 void Solve() {
     // Your code for each test case goes here
-    ll n;cin>>n;
-    ll ans = 1;
-    while(n){
-        int p = n%10;
-        n/=10;
-        ans*= calc(p);
+    string s;cin>>s;
+    ll pos; cin>>pos;
+    pos--;
+    ll len = s.length();
+    vector<char>st;
+    bool ok = pos<len;
+    s+='$';
+    for(auto c: s){
+        while(!ok && st.size()>0 && st.back()>c){
+            pos-=len;
+            len--;
+            st.pop_back();
+
+            if(pos<len){
+                ok = true;
+            }
+        }
+        st.push_back(c);
     }
-    cout<<ans<<endl;return;
+    cout<<st[pos];
+
+    return;
 }
 
 int32_t main() {
