@@ -38,7 +38,7 @@ int dy[] = {-1, 0, 1, 0};
 
 int n, m;
 vvi arr;
-
+vector<vector<pair<int,int>>> par;
 bool check(int x, int y){
     if(x>=0 && y>=0 && y<m && x<n && arr[x][y]!='#')return 1;
     return 0;
@@ -46,7 +46,7 @@ bool check(int x, int y){
 void bfs(pair<int,int> st){
     queue<pair<int,int>> q;
     vector<vector<int>> dist(n, vi(m, 1e9));
-    vector<vector<pair<int,int>>> par(n, vector<pair<int,int>>(m, {0,0}));
+    par.assign(n, vector<pair<int,int>>(m, {0,0}));
 
     dist[st.ff][st.ss] =0;
     q.push(st);
@@ -62,6 +62,11 @@ void bfs(pair<int,int> st){
         }
     }
 
+}
+void ppath(pair<int,int> en){
+    if(en == MP(-1,-1)) return;
+    ppath(par[en.ff][en.ss]);
+    cout<<en.ff<<" "<<en.ss<<endl;
 }
 void Solve() {
     // Your code for each test case goes here
