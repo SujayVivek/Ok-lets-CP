@@ -35,29 +35,14 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
-    // int n;cin>>n;
-    ll x, y;cin>>x>>y;
-    if(x%2==y%2){
-        if(__gcd(x,y)==1){
-            cout<<1<<endl;return;
-        }else{
-            cout<<0<<endl;return;
-        }
+    int n;cin>>n;
+    string s;cin>>s;
+    set<char>st;ll f = 0;
+    loop(i,0,n){
+        st.insert(s[i]);
+        f+= st.size();
     }
-    ll ans = 0;
-    loop(i,2,min(x,y)/2+5){
-        if(x%i == y%i){
-            ans = i;
-            break;
-        }
-    }
-    if(!ans){
-        cout<<-1<<endl;return;
-    }else{
-        ll p  = x/ans + 1;
-        cout<< p*ans - x<<endl;
-    }
-
+    cout<<f<<endl;return;
 }
 
 int32_t main() {

@@ -35,29 +35,46 @@ typedef vector<vll> vvll;
 
 void Solve() {
     // Your code for each test case goes here
-    // int n;cin>>n;
-    ll x, y;cin>>x>>y;
-    if(x%2==y%2){
-        if(__gcd(x,y)==1){
-            cout<<1<<endl;return;
+    int n, k;cin>>n>>k;
+    // vi a(n,0);
+    map<int,int>mpp;
+    loop(i,0,n){
+        int x;cin>>x;
+        mpp[x]++;
+    }
+    if(n == 1){
+        cout<<0<<endl;
+        return;
+    }
+    map<int,priority_queue<int>>newMap;
+    // int cost = 0;
+    for(auto it: mpp){
+        if(it.ss%2==1){
+            newMap[it.ff%k].push(it.ff);
+        }
+    }
+    int cost = 0;bool ok = true;
+    for(auto it: newMap){
+        if(it.ss.size()%2==1 && n%2==0){
+            cout<<-1<<endl;return;
+        }
+        if(it.ss.size()%2==0){
+            while(it.ss.size()>0){
+            int a = it.ss.top(); it.ss.pop();
+            int b = it.ss.top(); it.ss.pop();
+            cost+= abs(a-b)/k;
+            }
         }else{
-            cout<<0<<endl;return;
+            if(n%2==1 && ok){
+                //write my shit here
+            }
+            else{
+                cout<<-1<<endl;return;
+            }
         }
-    }
-    ll ans = 0;
-    loop(i,2,min(x,y)/2+5){
-        if(x%i == y%i){
-            ans = i;
-            break;
-        }
-    }
-    if(!ans){
-        cout<<-1<<endl;return;
-    }else{
-        ll p  = x/ans + 1;
-        cout<< p*ans - x<<endl;
-    }
-
+        
+    }    
+    cout<<cost<<endl;return;
 }
 
 int32_t main() {
