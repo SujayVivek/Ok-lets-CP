@@ -15,86 +15,56 @@ typedef vector<pair<ll, ll>> vpii;
 typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
-
-void Solve() {
-    ll n, k;cin>>n>>k;
-    string a ,b;cin>>a>>b;
-    map<char,ll>mpp;
-    set<char>st;
-    ll i = 0, j = 0;
-    ll mxLen = 0,Len = 0;
-    string copy_s = a, new_s;
-    if(k!=0)
-    while(i<n && j<n){
-        if(st.size()>k){
-            j--;
-            mpp[j]--;
-            Len--;
-            if(mpp[j]==0){
-                auto it = st.erase(a[j]);
-            }
-            copy_s[j] = a[j];
-            if(Len>=mxLen){
-                new_s = copy_s;
-                mxLen = Len;
-            }
-            if(a[i]==b[i]){
-                Len--;
-            }else{
-                mpp[a[i]]--;
-                Len--;
-            }
-
-            if(mpp[a[i]]==0){
-                auto it = st.erase(a[i]);
-            }
-            i++;
-            copy_s[i] = a[i];
-        }
-        if(a[j]==b[j]){
-            j++;
-            Len++;
-            continue;
-        }else{
-            if(mpp[a[j]]){
-                copy_s[j] = b[j]; 
-            }else{
-                st.insert(a[j]);
-                mpp[a[j]]++;
-                copy_s[j] = b[j];
-            }
-            Len++;
-            j++;
-        }
-    }
-    if(st.size()>k){
-        j--;
-        copy_s[j] = a[j]; Len--; 
-    }
-    if(Len>mxLen){
-        new_s = copy_s;
-        mxLen = Len;
-    }
-    ll l = 0;int ans = 0;
-    // cout<<new_s<<" "<<"HI"<<endl;
-    for(int i = 0; i<n; i++){
-        if(new_s[i]==b[i]){
-            l++; 
-        }else{
-            ans+= l*(l+1)/2;
+// typedef int long long;
+string a, b;
+string v;
+bool bools[26];
+ll ans, k;
+ 
+ll counter()
+{
+    ll anz = 0, l = 0;
+    for(ll i = 0; i < a.size(); i++) {
+        if(a[i] == b[i] || bools[ a[i]-'a' ])
+            l++;
+        else {
+            anz += l*(l+1)/2;
             l = 0;
         }
     }
-    ans+= l*(l+1)/2;
-
-    cout<<ans<<endl;return;
+    anz += l*(l+1)/2;
+    return anz;
 }
-
-int32_t main() {
-    int tt_ = 1;
-    cin >> tt_;
-    while (tt_--) {
-        Solve();
+ 
+void solve(ll pos, ll cnt)
+{
+    if(cnt > k) return;
+    if(pos == v.size()) {
+        if(cnt == k) ans = max(ans,counter());
+        return;
+    }
+    solve(pos+1, cnt);
+    bools[ v[pos]-'a' ] = 1;
+    solve(pos+1, cnt+1);
+    bools[ v[pos]-'a' ] = 0;
+}
+ 
+int main()
+{
+    ll t;
+    cin >> t;
+    while(t--) {
+        ll n; cin >> n >> k;
+        cin >> a >> b;
+        unordered_set <char> us;
+        for(auto &ch : a) us.insert(ch);
+        v.clear();
+        for(auto &x : us) v.pb(x);
+        k = min(k, (ll)us.size());
+        memset(bools, 0, sizeof bools);
+        ans = 0;
+        solve(0, 0);
+        cout << ans << endl;
     }
     return 0;
 }
