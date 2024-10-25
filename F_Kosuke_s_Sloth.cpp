@@ -16,28 +16,25 @@ typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
-     map<int,int> mpp;
-
-void swap(vll &p, ll i, ll j){
-    mpp[p[i]] = j;
-    mpp[p[j]] = i;
-     ll temp = p[i];
-     p[i] = p[j];
-     p[j] = temp;
-}
 void Solve() {
-     ll n;cin>>n;
-     vll p(n+1,0);
-     for(int i = 1; i<=n ; i++){
-        cin>>p[i];
-        mpp[p[i]] = i;
-     }
-    ll c = 0;
-    for(int i = 1 ; i<=n/2+1; i++){
-        if(p[i]==i || p[p[i]]==i)continue;
-        swap(p,p[i],mpp[i]);c++;
+    ll n, k;
+    cin >> n >> k;
+    if (k == 1) {
+        cout << n % MOD << endl;
+        return;
     }
-    cout<<c<<endl;
+    ll a = 1, b = 1;
+    ll cnt = 2;
+    while (1) {
+        ll c = (a%k + b%k)%k;
+        cnt++;
+        if (c == 0) {
+            ll ans = (cnt % MOD) * (n % MOD) % MOD;
+            cout << ans << endl;
+            return;
+        }
+        a = b,b = c;
+    }
 }
 
 int32_t main() {
