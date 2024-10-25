@@ -17,20 +17,29 @@ typedef vector<long long> vll;
 typedef vector<vll> vvll;
 
 void Solve() {
-    int N;
-    cin >> N;
-    vector<int> a(N);
-    for (auto &x : a)cin >> x;
-    int d = 0;
-    for (int i = 0; i < N - 1; i++)
-        d += a[i] == a[i + 1];
-    int p = 0;
-    for (int i = 0; i<(N - 1)/2+1; i++) {
-        int q = (a[i] == a[i + 1]) + (a[N - 2 - i] == a[N - 1 - i]);
-        q -= (a[i] == a[N - 2 - i]) + (a[i + 1] == a[N - 1 - i]);
-        p += max(q, 0);
+    ll n;cin>>n;
+    vll a(n,0);
+    for(auto &x:a)cin>>x;
+    map<ll,int> mpp;
+    ll c = 0;
+    ll s = 0;
+    for(ll i = 0; i<n; i++){
+        if(a[i]==0){
+            mpp.clear();c++;s = 0; continue;
+        }
+        s+=a[i];
+        if(s==0){
+            c++; s=0;
+            mpp.clear();
+        }
+        if(!mpp[s]){
+            mpp[s]++;
+        }else if(mpp[s]){
+            c++; s = 0;
+            mpp.clear();
+        }
     }
-    cout << d - p << '\n';
+    cout<<c<<endl;return;
 }
 
 int32_t main() {
