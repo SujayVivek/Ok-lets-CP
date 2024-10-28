@@ -15,23 +15,17 @@ typedef vector<pair<ll, ll>> vpii;
 typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
-#define int long long
+
 void Solve() {
     int n;cin>>n;
-    vi a(n,0);
-    // vi suff(n,0), pref(n,0);
-    for(auto &x : a) cin >> x;
-    ll sum = 0;
-    for(int i = 0 ; i < n ; i++){
-        sum += a[i];
-        if(sum <= 0) {cout<<"NO"<<endl;return;}
+    int mxx = 0, mxy = 0;
+    while(n--){
+        int x,y;
+        cin>>x>>y;
+        mxx = max(mxx, x);
+        mxy = max(mxy, y);
     }
-    sum = 0;
-    for(int i = n - 1 ; i >= 0 ; i--){
-        sum += a[i];
-        if(sum <= 0) {cout<<"NO"<<endl;return;}
-    }
-    cout<<"YES"<<endl;
+    cout<< (mxx+mxy)*2<<endl;return;
 }
 
 int32_t main() {

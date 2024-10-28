@@ -3,6 +3,7 @@ using namespace std;
 #define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
 #define MOD 1000000007
 typedef long long ll;
+#define int long long
 #define loop(ii, i, n) for (ll ii = i; ii < n; ++ii)
 #define endl "\n"
 #define pb push_back
@@ -15,23 +16,23 @@ typedef vector<pair<ll, ll>> vpii;
 typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
-#define int long long
+
 void Solve() {
     int n;cin>>n;
     vi a(n,0);
-    // vi suff(n,0), pref(n,0);
-    for(auto &x : a) cin >> x;
-    ll sum = 0;
-    for(int i = 0 ; i < n ; i++){
-        sum += a[i];
-        if(sum <= 0) {cout<<"NO"<<endl;return;}
+    map<ll, vll>mpp;
+    for(int i = 0; i<n; i++){
+        cin>>a[i];
+        mpp[a[i]+i].pb(a[i]+i+i);
     }
-    sum = 0;
-    for(int i = n - 1 ; i >= 0 ; i--){
-        sum += a[i];
-        if(sum <= 0) {cout<<"NO"<<endl;return;}
-    }
-    cout<<"YES"<<endl;
+    set<ll> vis;
+    function<void(ll)> dfs = [&](ll u) -> void {
+        if(vis.count(u)) return;
+        vis.insert(u);
+        for(auto nn: mpp[u]) dfs(nn);
+    };
+    dfs(n);
+    cout<<*vis.rbegin()<<endl;
 }
 
 int32_t main() {
