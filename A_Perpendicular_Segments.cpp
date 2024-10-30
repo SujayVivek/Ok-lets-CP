@@ -15,22 +15,13 @@ typedef vector<pair<ll, ll>> vpii;
 typedef vector<vi> vvi;
 typedef vector<long long> vll;
 typedef vector<vll> vvll;
- int n, m;
-int calc(int ind, int latest, vvi &dp){
-    if(ind >= n) return 0;
 
-    if(dp[ind][latest]!=-1)return dp[ind][latest];
-
-    int left = calc()
-
-}
 void Solve() {
-    cin>>n>>m;
-    vi a(n), b(m);
-    for(auto &x: a)cin>>x;
-    for(auto &x: b)cin>>x;
-    vvi dp(n+1, vi(m+1, -1));
-    calc();
+    int X, Y, K;
+    cin>>X>>Y>>K;
+    int P = min(X,Y);
+    cout<<0<<" "<<0<<" "<<P<<" "<<P<<endl;
+    cout<<0<<" "<<P<<" "<<P<<" "<<0<<endl; 
 }
 
 int32_t main() {
