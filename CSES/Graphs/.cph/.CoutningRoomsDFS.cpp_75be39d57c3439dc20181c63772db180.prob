@@ -1,0 +1,1 @@
+{"name":"Local: CoutningRoomsDFS","url":"e:\\C_PROG\\CSES\\Graphs\\CoutningRoomsDFS.cpp","tests":[{"id":1731252905293,"input":"5 8\n########\n#..#...#\n####.#.#\n#..#...#\n########","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\C_PROG\\CSES\\Graphs\\CoutningRoomsDFS.cpp","group":"local","local":true}
