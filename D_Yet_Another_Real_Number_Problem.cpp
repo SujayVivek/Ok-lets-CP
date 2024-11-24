@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define Mod 1000000007
+#define mod 1000000007
 #define ff first
 #define ss second
 typedef vector<vector<long long>> vvi;
@@ -8,76 +8,60 @@ typedef vector<long long> vi;
 #define int long long
 #define endl "\n"
 
-// Modular multiplication to prevent overflow
-int modMult(int a, int b, int mod) {
-    return (a % mod * b % mod) % mod;
-}
+#define int long long
 
-// Modular exponentiation for powers of two
-int powerOfTwoModulo(int power, int mod) {
-    int result = 1;
-    int base = 2; // Base for powers of 2
-    while (power > 0) {
-        if (power % 2 == 1) {
-            result = modMult(result, base, mod);
-        }
-        base = modMult(base, base, mod); // Square the base
-        power /= 2;
-    }
-    return result;
+int M = 1e9 + 7;
+
+int pow2(int x, int n) {
+    x %= M;
+    if (n == 0)
+        return 1;
+    else if (n == 1)
+        return x;
+    int p = pow2(x * x, n / 2);
+    if (n % 2)
+        return p * x % M;
+    else
+        return p;
 }
 
 void Solve() {
     int n;
     cin >> n;
-    vi a(n, 0), b(n, 0), bPref(n, 0), cPref(n, 0), c(n, 0);
-
-    for (int i = 0; i < n; i++) {
+    vector<int> a(n + 1);
+    for (int i = 1; i <= n; i++) {
         cin >> a[i];
-        int r = __builtin_ctz(a[i]);
-        b[i] = a[i] / (1 << r);
-        c[i] = r;
     }
-
-    bPref[0] = b[0];
-    cPref[0] = c[0];
-
-    for (int i = 1; i < n; i++) {
-        bPref[i] = bPref[i - 1] + b[i];
-        cPref[i] = cPref[i - 1] + c[i];
-    }
-
-    vi ans(n, 0);
-    ans[0] = a[0];
-    int mx = 0, mxI = 0, mxEle = a[0];
-
-    for (int i = 1; i < n; i++) {
-        int shift = cPref[i] - cPref[mxI]; // Amount of shift
-        if (modMult(a[i], powerOfTwoModulo(shift, Mod), Mod) >= mx || a[i] >= mxEle) {
-            mx = modMult(a[i], powerOfTwoModulo(cPref[i - 1], Mod), Mod); // Replace bit-shift
-            mxI = i;
-            mxEle = max(mxEle, a[i]);
-            ans[i] = (mx + bPref[i - 1]) % Mod;
-        } else {
-            ans[i] = max({
-                ans[i - 1] + a[i],
-                ans[mxI] + modMult(a[i], powerOfTwoModulo(cPref[i - 1] - cPref[mxI], Mod), Mod) + bPref[i - 1] - bPref[mxI],
-                modMult(a[i], powerOfTwoModulo(cPref[i - 1], Mod), Mod) + bPref[i - 1]
-            }) % Mod;
+    stack<pair<int, int>> stp;
+    vector<int> ans(n + 1, 0);
+    for (int i = 1; i <= n; i++) {
+        int c = 0;
+        while (a[i] % 2 == 0) {
+            a[i] /= 2;
+            c++;
         }
+        ans[i] = ans[i - 1];
+        while (!stp.empty()) { 
+            if (c > 32 || stp.top().first < a[i] * (1LL << c)) {
+                int val = stp.top().first, p = stp.top().second;
+                ans[i] = (ans[i] - val * pow2(2, p) % M + M) % M;
+                ans[i] = (ans[i] + val);
+                c += p;
+                stp.pop();
+            } 
+            else break;
+        }
+        stp.push({a[i], c});
+        ans[i] = (ans[i] + a[i] * pow2(2, c) % M) % M;
     }
-
-    for (auto &v : ans) {
-        cout << v << " ";
-    }
+    for (int i = 1; i <= n; i++)
+        cout << ans[i] << ' ';
     cout << endl;
-    return;
 }
-
 int32_t main() {
-    int tt_ = 1;
-    cin >> tt_;
-    while (tt_--) {
+    int t = 1;
+    cin >> t;
+    while (t--) {
         Solve();
     }
     return 0;
