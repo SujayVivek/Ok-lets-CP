@@ -10,7 +10,7 @@ typedef vector<long long> vi;
 
 void Solve() {
         int n;cin>>n;
-        vi a(n,0), b(n,0);
+        vi a(n+1,0), b(n+1,0);
         for(int i=1;i<=n;i++) cin>>a[i];
         for(int i=1;i<=n;i++) cin>>b[i];
         int ed=a[n];
