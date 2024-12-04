@@ -12,7 +12,7 @@ using namespace std;
 mt19937_64 RNG(chrono::steady_clock::now().time_since_epoch().count());
 
 #define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
-#define MOD 1000000007
+#define MOD 1000000014
 typedef long long ll;
 #define loop(ii, i, n) for (ll ii = i; ii < n; ++ii)
 #define loopm(ii, i, n, p) for (ll ii = i; ii < n; ii+p)
