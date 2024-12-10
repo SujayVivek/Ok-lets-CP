@@ -1,129 +1,176 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define mod 1000000007
-#define ff first
-#define ss second
-typedef vector<vector<long long>> vvi;
-typedef vector<long long> vi;
-#define int long long
-#define endl "\n"
-
-int dx[] = {1, 0, -1, 0};
-int dy[] = {0, 1, 0, -1};
-map<pair<int, int>, pair<int, int>> parent;
-
-vector<pair<int, int>> path;
-
-void pPath(pair<int, int> start, pair<int, int> end) {
-    if (end == start) {
-        path.push_back(start);
-        return;
+typedef long long ll;
+typedef long double ld;
+#define fastio                        \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(NULL);                    \
+    cout.tie(NULL)
+#define max3(a, b, c) max(max(a, b), c)
+#define max4(a, b, c, d) max(max(a, b), max(c, d))
+#define fr(i, n) for (ll i = 0; i < n; i++)
+ll gcd(ll a, ll b)
+{
+    return b == 0 ? a : gcd(b, a % b);
+}
+ll dx[] = {-1, 1, 0, 0};
+ll dy[] = {0, 0, -1, 1};
+bool issafe(ll x, ll y, ll n, ll m)
+{
+    return ((0 <= x) && (x < n)) && ((0 <= y) && (y < m));
+}
+char pro(pair<ll, ll> a, pair<ll, ll> b)
+{
+    if ((a.second + 1) == (b.second))
+    {
+        return 'R';
     }
-    pPath(start, parent[end]);
-    path.push_back(end);
+    else if ((a.second - 1) == (b.second))
+    {
+        return 'L';
+    }
+    else if ((a.first - 1) == (b.first))
+    {
+        return 'U';
+    }
+    else
+        return 'D';
 }
-
-bool check(int i, int j, vector<string> &grid) {
-    return (i >= 0 && j >= 0 && i < grid.size() && j < grid[0].length() && grid[i][j] != '#');
-}
-
-void bfs(pair<int, int> start, vector<string> &grid, vvi &dist) {
-    queue<pair<int, int>> q;
-    q.push(start);
-    dist[start.first][start.second] = 0;
-
-    while (!q.empty()) {
-        auto pos = q.front();
-        q.pop();
-
-        for (int i = 0; i < 4; i++) {
-            int nx = pos.first + dx[i], ny = pos.second + dy[i];
-            if (check(nx, ny, grid) && dist[nx][ny] > 1 + dist[pos.first][pos.second]) {
-                dist[nx][ny] = 1 + dist[pos.first][pos.second];
-                parent[{nx, ny}] = pos;
-                q.push({nx, ny});
+int main()
+{
+    fastio;
+    ll t = 1;
+    // cin >> t;
+    while (t--)
+    {
+        ll n, m;
+        cin >> n >> m;
+        vector<string> v(n);
+        for (auto &i : v)
+            cin >> i;
+        queue<pair<ll, ll>> q;
+        vector<vector<ll>> dist(n, vector<ll>(m, LLONG_MAX));
+        vector<vector<bool>> vis(n, vector<bool>(m, false));
+        for (ll i = 0; i < n; i++)
+        {
+            for (ll j = 0; j < m; j++)
+            {
+                if (v[i][j] == 'M')
+                {
+                    q.push({i, j});
+                    dist[i][j] = 0;
+                    vis[i][j] = true;
+                }
             }
         }
-    }
-}
-
-void Monsterbfs(vector<string> &grid, vvi &mdist, set<pair<int, int>> &monsters) {
-    queue<pair<int, int>> q;
-    for (auto it : monsters) {
-        q.push(it);
-        mdist[it.first][it.second] = 0;
-    }
-
-    while (!q.empty()) {
-        auto pos = q.front();
-        q.pop();
-
-        for (int i = 0; i < 4; i++) {
-            int nx = pos.first + dx[i], ny = pos.second + dy[i];
-            if (check(nx, ny, grid) && mdist[nx][ny] > 1 + mdist[pos.first][pos.second]) {
-                mdist[nx][ny] = 1 + mdist[pos.first][pos.second];
-                q.push({nx, ny});
+        while (q.size() > 0)
+        {
+            auto z = q.front();
+            ll x = z.first;
+            ll y = z.second;
+            q.pop();
+            for (ll i = 0; i < 4; i++)
+            {
+                ll nx = x + dx[i];
+                ll ny = y + dy[i];
+                if ((issafe(nx, ny, n, m) && (v[nx][ny] != '#')) && (!vis[nx][ny]))
+                {
+                    dist[nx][ny] = dist[x][y] + 1;
+                    vis[nx][ny] = true;
+                    q.push({nx, ny});
+                }
             }
         }
-    }
-}
-
-void checkPrinter(vvi &dist, vvi &mdist, pair<int, int> start, int j, int i, vector<string> &grid) {
-    if (grid[j][i]=='.' && dist[j][i] < mdist[j][i]) {
-        cout << "YES" << endl;
-        cout << dist[j][i] << endl;
-        pPath(start, {j, i});
-        for (int k = 0; k < path.size() - 1; k++) {
-            if (path[k + 1].second > path[k].second) {
-                cout << "R";
-            } else if (path[k + 1].second < path[k].second) {
-                cout << "L";
-            } else if (path[k + 1].first < path[k].first) { 
-                cout << "U";
-            } else {
-                cout << "D"; 
+        vector<vector<ll>> dista(n, vector<ll>(m, LLONG_MAX));
+        vector<vector<bool>> vista(n, vector<bool>(m, false));
+        queue<pair<ll, ll>> qa;
+        map<pair<ll, ll>, pair<ll, ll>> par;
+        for (ll i = 0; i < n; i++)
+        {
+            for (ll j = 0; j < m; j++)
+            {
+                if (v[i][j] == 'A')
+                {
+                    qa.push({i, j});
+                    dista[i][j] = 0;
+                    vista[i][j] = true;
+                    par[{i, j}] = {i, j};
+                }
             }
         }
-        cout << endl;
-        exit(0);
-    }
-}
-
-void Solve() {
-    int n, m;
-    cin >> n >> m;
-
-    set<pair<int, int>> monsters;
-    pair<int, int> start;
-    vector<string> grid;
-
-    for (int i = 0; i < n; i++) {
-        string s;
-        cin >> s;
-        grid.push_back(s);
-        for (int j = 0; j < m; j++) {
-            if (s[j] == 'M')
-                monsters.insert({i, j});
-            else if (s[j] == 'A')
-                start = {i, j};
+        while (qa.size() > 0)
+        {
+            auto z = qa.front();
+            ll x = z.first;
+            ll y = z.second;
+            qa.pop();
+            for (ll i = 0; i < 4; i++)
+            {
+                ll nx = x + dx[i];
+                ll ny = y + dy[i];
+                if (((issafe(nx, ny, n, m) && v[nx][ny] != '#')) && (!vista[nx][ny]))
+                {
+                    dista[nx][ny] = dista[x][y] + 1;
+                    vista[nx][ny] = true;
+                    qa.push({nx, ny});
+                    par[{nx, ny}] = {x, y};
+                }
+            }
         }
+        vector<pair<ll, ll>> res;
+        bool f = true;
+        for (ll i = 0; i < n; i++)
+        {
+            for (ll j = 0; j < m; j++)
+            {
+                if (((i == 0) || (j == 0)) || ((i == n - 1) || (j == m - 1)))
+                {
+                    if (dista[i][j] < dist[i][j])
+                    {
+                        pair<ll, ll> z = {i, j};
+                        while (par[z] != z)
+                        {
+                            res.push_back(z);
+                            z = par[z];
+                        }
+                        res.push_back(z);
+                        f = false;
+                        break;
+                    }
+                }
+            }
+            if (!f)
+            {
+                break;
+            }
+        }
+        // for (auto &i : res)
+        // {
+        //     cout << i.first << " " << i.second << "\n";
+        // }
+        if (!f)
+        {
+            cout << "YES\n";
+            ll x = res.size();
+            cout << x - 1 << "\n";
+            reverse(res.begin(), res.end());
+            for (ll i = 0; i < x - 1; i++)
+            {
+                char ch = pro(res[i], res[i + 1]);
+                cout << ch;
+            }
+        }
+        else
+        {
+            cout << "NO\n";
+        }
+        // for (auto &i : dist)
+        // {
+        //     for (auto &j : i)
+        //     {
+        //         cout << j << " ";
+        //     }
+        //     cout << "\n";
+        // }
     }
-
-    vvi dist(n, vi(m, 1e9)), mdist(n, vi(m, 1e9));
-    bfs(start, grid, dist);
-    Monsterbfs(grid, mdist, monsters);
-
-    for (int i = 0; i < m; i++) checkPrinter(dist, mdist, start, 0, i, grid);  
-    for (int i = 0; i < n; i++) checkPrinter(dist, mdist, start, i, m - 1, grid); 
-    for (int i = 0; i < m; i++) checkPrinter(dist, mdist, start, n - 1, i, grid); 
-    for (int i = 0; i < n; i++) checkPrinter(dist, mdist, start, i, 0, grid);  
-    cout << "IMPOSSIBLE" << endl;
-}
-
-int32_t main() {
-    int tt_ = 1;
-    while (tt_--) {
-        Solve();
-    }
-    return 0;
 }
