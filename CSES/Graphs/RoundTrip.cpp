@@ -8,38 +8,69 @@ typedef vector<long long> vi;
 #define int long long
 #define endl "\n"
 
-int n, m;
-vvi g;
-vi vis;
-vi par;
-bool ok = false;
-void dfs(int nn){
-    vis[nn] = 1;
-    for(auto v: g[nn]){
-        if(!vis[v]){
-            dfs(v);
-            par[v] = nn;
-        }
-    }
+
+const int N = 1e5+10;
+vi g[N];
+vector<bool> vis(N,0);
+vector<int> par(N,-1);
+ 
+void dfs(int node,int p)
+{
+      par[node] = p;
+      vis[node] = 1;
+    
+      for(auto x : g[node])
+          if(!vis[x]) dfs(x,node);
+          else if(x != p)
+      {
+          vector<int> cyc;   
+          
+          int cur = node;
+         
+          cyc.push_back(node);
+          
+          while(par[cur] != x)
+          {
+             cur = par[cur];
+             cyc.push_back(cur);
+          }
+          
+          cyc.push_back(x);
+          cyc.push_back(node);
+          
+          cout << cyc.size() << '\n';
+          
+          for(auto x : cyc) cout << x <<" ";
+          exit(0);
+      }
 }
-void Solve() {
-    cin>>n>>m;
-    g.resize(n+1);
-    vis.assign(n+1, 0);
-    par.assign(n+1, 0);
-    for(int i = 0; i<m ;i++){
-        int a, b; cin>>a>>b;
-        g[a].push_back(b);
-        g[b].push_back(a);
-    }
-    for(int i = 1; i<=n; i++){
-        if(!vis[i]) dfs(i);
-    }
+ 
+void Solve()
+{
+  int n,m;
+    cin >> n >> m;
+    
+  int a,b;
+    
+ for(int i = 0; i<n; i++)
+  {
+    cin >> a >> b;
+    g[a].push_back(b);
+    g[b].push_back(a);
+  }
+    
+    
+  for(int i=1;i<=n;i++)
+      if(!vis[i])
+  dfs(i,-1);
+    
+  cout<<"IMPOSSIBLE\n";
+    
 }
 
 int32_t main() {
     int tt_ = 1;
-    cin >> tt_;
+    // cin >> tt_;
     while (tt_--) {
         Solve();
     }
