@@ -11,35 +11,27 @@ typedef vector<long long> vi;
 void Solve() {
     int n, m; cin>>n>>m;
     string s; cin>>s;
-    set<int>cols;
-    vi rows((n+2)*m, 0);
-    for(int i = 0; i<s.length(); i++){
-        if(s[i]=='1'){
-            int j = i;
-            while(j<s.length()){
-                rows[j]++;
-                if(j+n<s.length())rows[j+n]--;
-                j+=n+1;
-            }
-        }
-    }
-    for(int i = 1; i<rows.size(); i++){
-        rows[i]+= rows[i-1];
-    }
+    map<int,int>mpp; //map to store max time in each row
     vi ans;
-    int k = 0;
+    set<int>cols;
     for(int i = 0; i<n; i++){
-        bool ok = false;
         for(int j = 0; j<m; j++){
-            if(j==m-1)k++;
-            int row_contr = (rows[i+j+k] + 3)/4;
-            cols.insert(j);
-            int cols_contr = cols.size();
-            ans.push_back(row_contr + cols_contr);
+            if(s[(i*m)+j] == '1'){
+                int R = mpp[i];
+                mpp[i] = max(R,((i*m) + j) + m);
+                cols.insert(j);
+            }
+            int col_contr = cols.size();
+            int row_contr = 0;
+            for(auto it: mpp){
+                int x = it.second;
+                if(x >=((i*m)+j) && x!=0) row_contr++;
+            }
+            ans.push_back(row_contr + col_contr);
         }
     }
-    for(auto x: ans){
-        cout<<x<<" ";
+    for(auto v: ans){
+        cout<<v<<" ";
     }cout<<endl;
 }
 
