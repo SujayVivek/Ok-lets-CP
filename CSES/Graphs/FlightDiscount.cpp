@@ -8,45 +8,66 @@ typedef vector<long long> vi;
 #define int long long
 #define endl "\n"
 
+const int INF = LLONG_MAX;
 void Solve() {
     int n, m; cin>>n>>m;
-    vector<vector<pair<int, int>>>g;
-    for(int i = 1; i<=m; i++){
+    vector<vector<pair<int,int>>>g(n+1), rg(n+1);
+    vi dis1(n+1, INF);
+    vi dis2(n+1, INF);
+    vvi Edges;
+
+    for(int i = 0; i<m; i++){
         int a, b, c; cin>>a>>b>>c;
-        g[a].push_back({c, b});
+        g[a].push_back({c , b});
+        Edges.push_back({c, a, b});
+        rg[b].push_back({c, a});
     }
-    vi par(n+1);
-    vi dist(n+1, 1e9);
-    map<pair<int,int>, int> distMap;
-    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
-    pq.push({0,1});
-    while(!pq.empty()){
-        auto pos = pq.top(); pq.pop();
-        int neigh = pos.second, weigh = pos.first;
-        for(auto v: g[neigh]){
-            if(dist[v.first]> weigh + dist[neigh]){
-                dist[v.first] = weigh + dist[neigh];
-                par[v.second] = neigh;
-                pq.push({dist[v.first], v.second}); 
-                distMap[{neigh, v.second}] = weigh;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    pq.push({0, 1});
+    dis1[1] = 0;
+
+    while (!pq.empty()) {
+        auto Pos = pq.top();
+        int Pos_distance = Pos.first, Pos_Val = Pos.second;
+        pq.pop();
+        // if (Pos_distance > dis1[Pos_Val]) continue;
+
+        for (auto X : g[Pos_Val]) {
+            int X_distance = X.first, X_Val = X.second;
+            if (dis1[X_Val] > dis1[Pos_Val] + X_distance) {
+                dis1[X_Val] = dis1[Pos_Val] + X_distance;
+                pq.push({dis1[X_Val], X_Val});
             }
         }
     }
-    vi path;
-    int cur = n;
-    while(cur!=1){
-        int father = par[cur];
-        path.push_back(distMap[{father, cur}]);
-        cur = par[cur];
+
+    // Dijkstra for dis2 (from n to 1 using reversed graph)
+    pq.push({0, n});
+    dis2[n] = 0;
+
+    while (!pq.empty()) {
+        auto Pos = pq.top();
+        int Pos_distance = Pos.first, Pos_Val = Pos.second;
+        pq.pop();
+        // if (Pos_distance > dis2[Pos_Val]) continue;
+
+        for (auto X : rg[Pos_Val]) {
+            int X_distance = X.first, X_Val = X.second;
+            if (dis2[X_Val] > dis2[Pos_Val] + X_distance) {
+                dis2[X_Val] = dis2[Pos_Val] + X_distance;
+                pq.push({dis2[X_Val], X_Val});
+            }
+        }
     }
-    sort(path.begin(), path.end());
-    int ans = 0;
-    for(int i = 0; i<path.size()-1; i++){
-        ans += path[i];
+    int ans = INF;
+    for (auto it : Edges) {
+        int Edge_val = it[0], Edge_lft = it[1], Edge_rgt = it[2];
+        if (dis1[Edge_lft] != INF && dis2[Edge_rgt] != INF) {
+            ans = min(ans, Edge_val / 2 + dis1[Edge_lft] + dis2[Edge_rgt]);
+        }
     }
-    ans += (0.5*path[path.size()-1]);
-    cout<<ans<<endl;
-    return;
+
+    cout << ans << endl;
 }
 
 int32_t main() {
