@@ -1,0 +1,1 @@
+{"name":"Local: SnakeNumberNonDP","url":"e:\\C_PROG\\Atcoder\\SnakeNumberNonDP.cpp","tests":[{"id":1736082853097,"input":"97 210\n","output":""},{"id":1736082877426,"input":"1000 9999\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\C_PROG\\Atcoder\\SnakeNumberNonDP.cpp","group":"local","local":true}
