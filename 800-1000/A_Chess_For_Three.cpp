@@ -1,51 +1,32 @@
-
-//   _______ _     _                     _        _        __             _   _            _                            
-//  |__   __| |   (_)                   | |      (_)      / _|           | | | |          (_)                           
-//     | |  | |__  _ ___    ___ ___   __| | ___   _ ___  | |_ ___  _ __  | |_| |__   ___   _ _ __  ___  __ _ _ __   ___ 
-//     | |  | '_ \| / __|  / __/ _ \ / _` |/ _ \ | / __| |  _/ _ \| '__| | __| '_ \ / _ \ | | '_ \/ __|/ _` | '_ \ / _ \
-//     | |  | | | | \__ \ | |_| (_) | |_| |  __/ | \__ \ | || (_) | |    | |_| | | |  __/ | | | | \__ \ |_| | | | |  __/
-//     |_|  |_| |_|_|___/  \___\___/ \__,_|\___| |_|___/ |_| \___/|_|     \__|_| |_|\___| |_|_| |_|___/\__,_|_| |_|\___|
-                                                                                                                     
 #include <bits/stdc++.h>
-using namespace std;                                                                                                                     
-#define FOR(a,c)   for ( int (a)=0; (a)<(c); (a)++)
-typedef vector<int> vi;
-typedef vector<long long> vll;
-#define PB push_back
-#define ll long long
+using namespace std;
+#define mod 1000000007
+#define ff first
+#define ss second
+typedef vector<vector<long long>> vvi;
+typedef vector<long long> vi;
+#define int long long
+#define endl "\n"
 
-int main(){
-    int t;cin>>t;
-    while(t--){
-        int p1,p2,p3;
-        cin>>p1>>p2>>p3;
-        int sum = p1+p2+p3;
-        if(sum%2==1){
-            cout<<"-1"<<endl;
-            continue;
-        }
-        else{
-            int maxp = max(p1,p2);
-            maxp = max(maxp, p3);
-            int minp = min(p1,p2);
-            minp = min(minp,p3);
-            int num2 = sum- maxp- minp;
-            priority_queue <int> pq;
-            pq.push(maxp);
-            pq.push(minp);
-            pq.push(num2);
-            int ctr=0;
-            while(pq.top()!=0){
-                int l = pq.top(); pq.pop();
-                int r= pq.top();pq.pop();
-                if(l==0 || r==0)break;
-                pq.push(l-1);pq.push(r-1);
-                ctr++;
-            }
-            cout<<ctr<<endl;
-        }
-
+void Solve() {
+    int a, b, c; cin>>a>>b>>c;
+    int S = a + b + c;
+    if(S%2){
+        cout<<-1<<endl;return;
     }
-    
+    if(a+b<=c){
+        cout<<a+b<<endl;return;
+    }
+    S = a/2 + b/2 + c/2;
+    a%=2, b%=2, c%=2;
+    cout<<S + (a+b+c)/2<<endl;
+}
+
+int32_t main() {
+    int tt_ = 1;
+    cin >> tt_;
+    while (tt_--) {
+        Solve();
+    }
     return 0;
 }
