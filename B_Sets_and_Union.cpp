@@ -12,23 +12,27 @@ void Solve() {
     int n; cin>>n;
     map<int,set<int>>mpst;
     map<int,set<int>>stmp;
+    set<int> points;
     for(int i = 0; i<n; i++){
         int A; cin>>A;
         for(int j = 0; j<A; j++){
             int B; cin>>B;
             mpst[B].insert(i+1);
             stmp[i+1].insert(B);
+            points.insert(B);
         }
     }
-    int mn = 1e18, point = -1;
-    vi points;
-    for(auto it: mpst){
-        if(it.second.size()<=mn){
-            mn = it.second.size();
-            point = it.first;
-            points.push_back(point);
-        }
-    }
+    // int mn = 1e18, point = -1;
+    // for(auto it: mpst){
+    //     if(it.second.size()<mn){
+    //         mn = it.second.size();
+    //     }
+    // }
+    // for(auto it: mpst){
+    //     if(it.second.size() == mn){
+    //         points.push_back(it.first);
+    //     }
+    // }
     // cout<<point<<" HYI"<<endl;
     int ans = 0;
     for(auto point: points){
