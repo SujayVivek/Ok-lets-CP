@@ -20,7 +20,7 @@ void Solve() {
         cout<<S<<endl;return;
     }
     int N = n;
-    int Ans = max(S, -S);
+    int Ans = S;
     while(N>1){
         int PreSum = 0;
         for(int i = 0; i<N-1; i++){
