@@ -7,54 +7,56 @@ typedef vector<vector<long long>> vvi;
 typedef vector<long long> vi;
 #define int long long
 #define endl "\n"
-vvi adj(1000, vi(1000, 1e9));
-set<int>Near_points;
-void multibfs(int s1, int s2, vvi &g1, vvi &g2){
-    queue<int> q1, q2;
-    q1.push(s1), q2.push(s2);
-    while(!q1.empty() && !q1.empty()){
-        int top1 = q1.front(); q1.pop();
-        int top2 = q2.front(); q2.pop();
-        for(auto A: g1[top1]){
-            for(auto B: g2[top2]){
-                if(adj[A][B]> abs(A-B)+adj[top1][top2]){
-                    adj[A][B] = abs(A-B) + adj[top1][top2];
-                }
-                q2.push(B);
-            }
-            q1.push(A);
-        }
-    }
-}
+set<int> Near_points;
+
 void Solve() {
-    int n, s1, s2; cin>>n>>s1>>s2;
-    int m1; cin>>m1;
-    set<pair<int,int>> st;
-    vvi g1(n+1), g2(n+1);
-    for(int i = 0; i<m1; i++){
-        int a, b; cin>>a>>b;
-        st.insert({a, b}); st.insert({b,a});
+    int n, s1, s2; cin >> n >> s1 >> s2;
+    int m1; cin >> m1;
+    set<pair<int, int>> st;
+    vvi g1(n + 1), g2(n + 1);
+    for (int i = 0; i < m1; i++) {
+        int a, b; cin >> a >> b;
+        st.insert({a, b}); st.insert({b, a});
         g1[a].push_back(b), g1[b].push_back(a);
     }
     Near_points.clear();
-    int m2; cin>>m2;
-    for(int i = 0; i<m2; i++){
-        int a, b; cin>>a>>b;
+    int m2; cin >> m2;
+    for (int i = 0; i < m2; i++) {
+        int a, b; cin >> a >> b;
         g2[a].push_back(b), g2[b].push_back(a);
-        if(st.find(make_pair(a, b))!=st.end()){
+        if (st.find({a, b}) != st.end()) {
             Near_points.insert(a), Near_points.insert(b);
         }
     }
-    if(Near_points.size()==0){
-        cout<<-1<<endl;return;
+    if (Near_points.empty()) {
+        cout << -1 << endl; return;
     }
-    adj[s1][s2] = 0;
-    multibfs(s1, s2, g1, g2);
-    int ans = 1e9;
-    for(auto it: Near_points){
-        ans = min(adj[it][it], ans);
+    vvi distances(n + 1, vi(n + 1, 1e18));
+    set<pair<int, pair<int, int>>> q;
+    distances[s1][s2] = 0;
+    q.insert({0, {s1, s2}});
+    while (!q.empty()) {
+        int cost = q.begin()->first;
+        int nn1 = q.begin()->second.first;
+        int nn2 = q.begin()->second.second;
+        q.erase(q.begin());
+        for (auto it1 : g1[nn1]) {
+            for (auto it2 : g2[nn2]) {
+                int C = abs(it1 - it2);
+                if (distances[it1][it2] > distances[nn1][nn2] + C) {
+                    distances[it1][it2] = distances[nn1][nn2] + C;
+                    q.insert({distances[it1][it2], {it1, it2}});
+                }
+            }
+        }
     }
-    cout<<ans<<endl;
+    int ans = 1e18;
+
+    for (int it : Near_points) {
+        ans = min(ans, distances[it][it]);
+    }
+    
+    cout << (ans==1e18?-1:ans) << endl;
 }
 
 int32_t main() {
