@@ -8,73 +8,72 @@ typedef vector<long long> vi;
 #define int long long
 #define endl "\n"
 
+vvi dijkstra(int start, int n, const vector<vector<pair<int, int>>>& g, const set<int>& H) {
+    vvi dist(n, vi(2, 1e18));
+    priority_queue<vi, vvi, greater<vi>> q;
+    
+    dist[start][0] = 0;
+    int P = 0;
+    if(H.count(start)) P = 1;
+    q.push({0, start, P}); 
+
+    while (!q.empty()) {
+        auto cur = q.top();
+        q.pop();
+        int cur_dist = cur[0], node = cur[1], horse = cur[2];
+
+        if (cur_dist > dist[node][horse]) continue;
+
+        for (auto edge : g[node]) {
+            int sub_node = edge.first, weight = edge.second;
+            int new_horse = horse | (H.count(sub_node) ? 1 : 0);
+            int new_dist = cur_dist + (horse ? weight / 2 : weight);
+            
+            if (dist[sub_node][new_horse] > new_dist) {
+                dist[sub_node][new_horse] = new_dist;
+                q.push({new_dist, sub_node, new_horse});
+            }
+        }
+    }
+    return dist;
+}
+
 void Solve() {
     int n, m, h;
     cin >> n >> m >> h;
+    
     set<int> H;
     for (int i = 0; i < h; i++) {
         int x; cin >> x;
-        H.insert(x);
+        H.insert(x - 1);  
     }
-    vector<vector<pair<int, int>>> g(n + 1);
+
+    vector<vector<pair<int, int>>> g(n);
     for (int i = 0; i < m; i++) {
         int a, b, c;
         cin >> a >> b >> c;
+        --a, --b;  
         g[a].push_back({b, c});
         g[b].push_back({a, c});
     }
 
-    vector<long long> adj1(n + 1, 1e18), adj2(n + 1, 1e18);
-    adj1[1] = 0, adj2[n] = 0;
+    vvi d1 = dijkstra(0, n, g, H);    
+    vvi d2 = dijkstra(n - 1, n, g, H); 
 
-    priority_queue<vector<long long>, vector<vector<long long>>, greater<vector<long long>>> q;
-    q.push({0, 1, 0});
-
-    while (!q.empty()) {
-        vector<long long> Top = q.top(); q.pop();
-        long long cur_dist = Top[0], node = Top[1], horse = Top[2];
-
-        for (auto nn : g[node]) {
-            int weight = nn.second, sub_node = nn.first;
-            long long new_dist = cur_dist + ((horse) ? weight / 2 : weight);
-
-            if (adj1[sub_node] > new_dist) {
-                adj1[sub_node] = new_dist;
-                int new_horse = horse | (H.count(sub_node) ? 1 : 0);
-                q.push({adj1[sub_node], sub_node, new_horse});
-            }
-        }
-    }
-    q = priority_queue<vector<long long>, vector<vector<long long>>, greater<vector<long long>>>();
-    q.push({0, n, 0});
-
-    while (!q.empty()) {
-        vector<long long> Top = q.top(); q.pop();
-        long long cur_dist = Top[0], node = Top[1], horse = Top[2];
-
-        for (auto nn : g[node]) {
-            int weight = nn.second, sub_node = nn.first;
-            long long new_dist = cur_dist + ((horse) ? weight / 2 : weight);
-
-            if (adj2[sub_node] > new_dist) {
-                adj2[sub_node] = new_dist;
-                int new_horse = horse | (H.count(sub_node) ? 1 : 0);
-                q.push({adj2[sub_node], sub_node, new_horse});
-            }
-        }
+    int Ans = 1e18;
+    for (int i = 0; i < n; i++) {
+        int A = max(min(d1[i][0], d1[i][1]), min(d2[i][0], d2[i][1]));
+        Ans = min(Ans, A);
     }
 
-    long long Ans = 1e18;
-    for (int i = 1; i <= n; i++) {
-        Ans = min(Ans, max(adj1[i], adj2[i]));
-    }
-
-    if (Ans == 1e18) cout << -1 << endl;
-    else cout << Ans << endl;
-}  
+    cout << (Ans == 1e18 ? -1 : Ans) << endl;
+}
 
 int32_t main() {
-    int tt_ = 1;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    int tt_;
     cin >> tt_;
     while (tt_--) {
         Solve();
