@@ -20,7 +20,7 @@ typedef long long ll;
 #define endl "\n"
 #define pb push_back
 #define ppb pop_back
-#define MP make_pair
+#define MP make_pair 
 #define ff first
 #define ss second
 #define sz(x) ((int)(x).size())
