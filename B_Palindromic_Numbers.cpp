@@ -10,7 +10,7 @@ typedef vector<long long> vi;
 
 void Solve() {
     int n;
-    cin >> n; string a;
+    cin >> n; string a; 
     cin >> a;
     string s, b;
     if (a[0] != '9') {
