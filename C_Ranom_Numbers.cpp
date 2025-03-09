@@ -25,24 +25,13 @@ int check(string s){
 }
 
 void Solve() {
-    string s; cin >> s;
-    unordered_map<char, int> first, last;
-    for(int i = 0; i < s.length(); i++){
-        if(first.find(s[i]) == first.end()) first[s[i]] = i;
-        last[s[i]] = i;
-    }
-    int mx = LLONG_MIN;
-    for(auto it : first){
-        string S = s;
-        S[it.second] = 'E'; 
-        mx = max(mx, check(S));
-    }
-    for(auto it : last){
-        string S = s;
-        S[it.second] = 'A'; 
-        mx = max(mx, check(S));
-    }
-    cout << mx << endl;
+    string s; cin >> s; int ans = LLONG_MIN;
+    set<char> st = {'A', 'B', 'C', 'D', 'E'};
+    for(auto ch1: st)
+        for(auto ch2: st){
+            int first = s.find(ch1); string s1 = s, s2 = s; if(first!=string::npos){ s1[first] = ch2; ans = max(ans, check(s1));}
+            int last = s.rfind(ch1); if(last != string::npos) {s2[last] = ch2; ans = max(ans, check(s2));}
+        }cout<<ans<<endl;
 }
 
 int32_t main() {
