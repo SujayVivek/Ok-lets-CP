@@ -8,32 +8,30 @@ typedef vector<long long> vi;
 #define int long long
 #define endl "\n"
 
+int MX = LLONG_MIN, MN = LLONG_MAX;
+int n;
+int calc(int mx, int mn, vi &a, vvi &dp){
+    if((mx-mn) == (n-1)) return 0;
+    if(dp[mx][mn]!=-1) return dp[mx][mn];
+
+    int ans = 1e18;
+    if(mx<n-1) ans = min(ans, calc(mx + 1, mn, a, dp) + a[mx+1]-a[mn]);
+    if(mn>0) ans = min(ans, calc(mx, mn-1, a, dp) + a[mx] - a[mn-1]);
+    return dp[mx][mn] = ans;
+}
+
 void Solve() {
-    int n; cin>>n;
-    vector<pair<int,int>>vpp;
-    for(int i = 0; i<n; i++){ int x; cin>>x;
-        vpp.push_back({x, i});
-    }int Ans = 1e18;
+    cin>>n;
+    vi a(n,0);
+    for(int i = 0; i<n; i++) {cin>>a[i]; MX = max(MX, a[i]), MN = min(MN, a[i]);}
     if(n==1){cout<<0<<endl;return;}
-    sort(vpp.begin(), vpp.end());
+    sort(a.begin(), a.end());
+    int Ans = 1e18;
+    vvi dp(n+1, vi(n+1, -1));
     for(int i = 0; i<n; i++){
-        int mn = vpp[i].first, mx = vpp[i].first;
-        int j = i, k = i; int cnt = 1; int Sum = 0;
-        while(cnt<n){
-            int T = 1e18, S = 1e18;
-            if(j<n-1) T = vpp[j+1].first - mx;
-            if(k>0) S = mn - vpp[k-1].first;
-            if(T==1e18 && S==1e18) break;
-            if(T<S){
-                j++; mx = vpp[j].first; Sum+= (mx-mn);
-            }else if(T>=S){
-                k--; mn = vpp[k].first; Sum+= (mx-mn);
-            }
-            cnt++;
-        }
-        cout<<Sum<<" ho"<<endl;
-        Ans = min(Ans, Sum);
-    } cout<<Ans<<endl;
+        Ans = min(Ans, calc(i,i, a, dp));
+    }
+    cout<<Ans<<endl;
 }
 
 int32_t main() {
