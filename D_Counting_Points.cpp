@@ -8,39 +8,26 @@ typedef vector<long long> vi;
 #define int long long
 #define endl "\n"
 
-int points(int X, int x, int r){
-    int lo = 0, hi = r; int ans = -1;
-    while(lo<=hi){
-        int mid = lo + (hi - lo)/2;
-        if((mid*mid + (X-x)*(X-x)) <= r*r){
-            lo = mid + 1;
-            ans = mid;
-        }else{
-            hi = mid -1;
-        }
-    }
-    return ans;
-}
 void Solve() {
     int n, m; cin>>n>>m;
-    vector<pair<int,int>>vp;
+    vi x(n,0), r(n,0);
+    for(auto &b: x) cin>>b; 
+    for(auto &b: r) cin>>b;
+    vvi vp;
     for(int i = 0; i<n; i++){
-        int x, r; cin>>x>>r;
-        vp.push_back({x, r});
-    }
-    sort(vp.begin(), vp.end());
-    map<int, pair<int,int>>mpp;
-    for(int i = 0; i<n; i++){
-        int x = vp[i].first, r = vp[i].second;
-        for(int j = x-r; j<=x+r; j++){
-            if(mpp[j].second){ if(mpp[j].second < r) mpp[j] = {x, r};}
-            else mpp[j] = {x, r};
+        for(int j = -r[i]; j<=r[i]; j++){
+            int pts = sqrt(r[i]*r[i]-j*j);
+            vp.push_back({x[i]+ j, pts});
         }
-    }int pts = 0;
-    for(auto it: mpp){
-        pts+= points(it.first, it.second.first, it.second.second);
     }
-    cout<<2*pts<<endl;
+    sort(vp.begin(), vp.end()); int j = 0, ans = 0;
+    for(int i = 0; i<vp.size(); i = j){
+        while(j<vp.size() && vp[i][0] == vp[j][0]) j++;
+        int A  = 0;
+        for(int k = i; k<j; k++) A = max(A, vp[k][1]);
+        ans+= 2*A+1;
+    }
+    cout<<ans<<endl;
 }
 
 int32_t main() {
