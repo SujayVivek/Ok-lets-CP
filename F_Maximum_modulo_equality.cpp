@@ -1,36 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define mod 1000000007
-#define ff first
+#define ff firsparseTable
 #define ss second
 typedef vector<vector<long long>> vvi;
 typedef vector<long long> vi;
 #define int long long
 #define endl "\n"
 
-vi SegTree, a;
-void build(int idx, int l, int r){
-    if(l==r){
-        SegTree[idx] = a[l]; return;
-    }
-    int mid = l + (r-l)/2;
-    build(2*idx, l, mid);
-    build(2*idx+1, mid+1, r);
-    SegTree[idx] = __gcd(SegTree[2*idx], SegTree[2*idx + 1]);
-}
-int query(int idx, int l, int r, int lq, int rq){
-    if(r<lq || l>rq) return 0;
-    if(l>=lq && r<=rq) return SegTree[idx];
-    int mid = l + (r-l)/2;
-    return __gcd(query(2*idx, l, mid, lq, rq), query(2*idx + 1, mid+1, r, lq, rq));
-}
+const int N=2e5+5;
+int a[N];
+int sparseTable[N][31];
 void Solve() {
-    int n, q; cin>>n>>q;
-    SegTree.resize(4*n+5);
-    a.resize(n);
-    for(int i = 0; i<n; i++) cin>>a[i];
-    build(1, 0, n-1);
-    while(q--){int l, r; cin>>l>>r; l--, r--;cout<<query(1, 0, n-1, l , r)<<" ";} cout<<endl;
+    int n,q;
+	cin>>n>>q;
+	for(int i=0;i<n;i++){
+		cin>>a[i];
+		if(i) sparseTable[i][0]=a[i]-a[i-1];
+	} 
+	for(int j=1;j<20;j++)
+	   for(int i=1;i<=n-(1<<j)+1;i++){
+	   	sparseTable[i][j]=__gcd(sparseTable[i][j-1],sparseTable[i+(1<<(j-1))][j-1]);
+	   }
+	while(q--){
+		int l,r;
+		cin>>l>>r;r--;
+		if(l>r) cout<<0<<" ";
+		else{
+			int len=log2(r-l+1);
+			cout<<abs(__gcd(sparseTable[l][len],sparseTable[r-(1<<len)+1][len]))<<" ";
+		}
+	}cout<<endl;
 }
 
 int32_t main() {
