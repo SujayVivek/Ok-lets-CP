@@ -8,41 +8,36 @@ typedef vector<long long> vi;
 #define int long long
 #define endl "\n"
 
-vi subTreeSZ;
-vvi levels;
-vi maxHeights;
 vvi g;
-void dfs(int node, int lvl){
-    subTreeSZ[node] = 1;
-    levels[lvl].push_back(node);
+vi maxHeights;
+vi levels;
+int mxlvl;
+void dfs(int node, int lvl, int par){
+    mxlvl = max(lvl, mxlvl);
+    levels[lvl]++;
+    maxHeights[node] = lvl;
     for(auto nn: g[node]){
-        dfs(nn, lvl + 1);
-        subTreeSZ[node]+= subTreeSZ[nn];
-        maxHeights[node] = max(maxHeights[nn], lvl);
+        if(nn!=par){
+            dfs(nn, lvl + 1, node);
+            maxHeights[node] = max(maxHeights[node], maxHeights[nn]);
+        }
     }
 }
 void Solve() {
     int n; cin>>n;
-    g.resize(n+1);
-    levels.resize(n+1);
-    maxHeights.assign(n+1, 0);
-    subTreeSZ.resize(n+1);
+    g.assign(n+5,{}); mxlvl = 0; levels.assign(n+5, 0), maxHeights.assign(n+5, 0); 
     for(int i = 0; i<n-1; i++){
-        int u, v; cin>>u>>v;
-        g[u].push_back(v);
+        int u, v; cin>>u>>v; g[u].push_back(v), g[v].push_back(u);
     }
-    dfs(1, 1); int Ans = 1e18;
-    for(int j = levels.size()-1; j>=0; j--){
-        int prune = 0;
-        for(auto nn: levels[j]){
-            prune+= subTreeSZ[nn];
-        }
-        for(int i = j-1; i>0; i--){
-            for(auto nn: levels[i]) if(maxHeights[nn]<j) prune++;
-        }
-        Ans = min(Ans, prune);
-    }
-    cout<<Ans<<endl;
+    dfs(1, 1, 0);
+    vi pref(n+5,0);
+    for(int i = 1; i<=n; i++) pref[maxHeights[i]]++;
+    for(int i = 1; i<=n; i++) {pref[i]+= pref[i-1]; levels[i]+= levels[i-1];}
+    int ans = 1e18;
+    for(int i = 1; i<=mxlvl; i++){
+        int prune = levels[mxlvl]-levels[i] + pref[i-1];
+        ans = min(ans, prune);
+    }cout<<ans<<endl;
 }
 
 int32_t main() {
