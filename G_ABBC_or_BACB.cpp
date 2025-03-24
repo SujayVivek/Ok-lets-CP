@@ -8,35 +8,28 @@ typedef vector<long long> vi;
 #define int long long
 #define endl "\n"
 
-int funct(string s, int n){
-    int i = 0, cnt = 0;
-    for(i = 0; i<n-2; i++){
-        if(s[i] == 'A' && s[i+1] == 'B'){
-            if(s[i+2] == 'A'){
-                s[i+1] = 'C'; s[i+2] = 'B';
-                cnt++;
-            }else{
-                s[i] = 'B', s[i+1] = 'C';
-                cnt++;
-            }
-        }else if(s[i]=='B' && s[i+1]=='A'){
-            s[i] = 'C', s[i+1] = 'B';
-            cnt++;
-        }
-    }
-    if(s[i]=='A' && s[i+1] == 'B'){
-        s[i] = 'B', s[i+1] = 'C';
-                cnt++;
-    } else if(s[i] == 'B' && s[i+1] == 'A'){
-        s[i] = 'C', s[i+1] = 'B';
-            cnt++;
-    }
-    return cnt;
-}
 void Solve() {
-    string s; cin>>s; int n = s.length(); int cnt = 0;
-    string p = s; reverse(s.begin(), s.end());
-    cout<<max(funct(p, n), funct(s, n))<<endl;
+    string s; cin>>s; int n = s.length(); s+='$';
+    vector<pair<char, int>> vp; int c  = 1;
+    vector<int> places;
+    for(int i = 0; i<n; i++){
+        if(s[i] == s[i+1]){
+            c++;
+        }else{
+            vp.push_back({s[i], c}); c = 1;
+        }
+    } int cnt = 0;
+    int mn = 1e18, S = 0; bool ok = false;
+    for(auto it: vp){
+        if(it.first == 'A'){ S+= it.second, mn = min(mn, it.second);}
+        else if(it.second>=2) ok = true;
+    }
+    if(ok || !(vp[0].first == 'A' && vp[vp.size()-1].first == 'A') ){
+        cout<<S<<endl;
+    }else{
+        if(mn == 1e18) mn = 0;
+        cout<<S-mn<<endl;
+    }
 }
 
 int32_t main() {
