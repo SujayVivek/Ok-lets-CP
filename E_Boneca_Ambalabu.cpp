@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define mod 1000000007
+#define ff first
+#define ss second
+typedef vector<vector<long long>> vvi;
+typedef vector<long long> vi;
+#define int long long
+#define endl "\n"
+
+void Solve() {
+    int n; cin>>n;
+    vi a(n,0); for(auto &x: a) cin>>x;int mx = 0;
+    vi set(31, 0);
+    for(int j = 30; j>=0; j--){
+        int cnt = 0;
+        for(int i = 0; i<n; i++){
+            if((a[i]&(1<<j))) cnt++;
+        }
+        set[j] = cnt;
+    }
+    for(int i = 0; i<n; i++){
+        int sub_max = 0;
+        for(int j = 30; j>=0; j--){
+            if(a[i]&(1<<j)) sub_max+= (n-set[j])*(1<<j);
+            else sub_max+= (set[j])*(1<<j);
+        }
+        mx = max(mx, sub_max);
+    }cout<<mx<<endl;
+}
+
+int32_t main() {
+    int tt_ = 1;
+    cin >> tt_;
+    while (tt_--) {
+        Solve();
+    }
+    return 0;
+}
